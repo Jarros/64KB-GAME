@@ -1,1 +1,0 @@
-Set 640x480 at 16 bits-per-pixel mode
