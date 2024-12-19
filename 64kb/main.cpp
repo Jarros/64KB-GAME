@@ -9,6 +9,7 @@
 #include "game.h"
 #include "projectile.h"
 #include "terrain.h"
+#include "network.h"
 
 Input* input = nullptr;
 
@@ -22,21 +23,18 @@ float rndf()
 	return rand() % 64 / 64.0f;
 }
 
-void seedrand_tick()
-{
-	srand(GetTickCount());
-}
-
 void Message(char* message)
 {
 	MessageBox(NULL, (LPCSTR)message, (LPCSTR)"Error", MB_OK | MB_ICONSTOP);
 }
 
-float T = 1.0f;
+float deltaTick = 1.0f;
+
 
 BOOL	done = FALSE;
 DWORD TICKWIN = 0;
 DWORD TICKFRM = 0;
+DWORD networkingTick = 0;
 
 float Testx; float Testy; float Testz;
 float ratio = (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT;
@@ -62,7 +60,7 @@ float Dist3D(float x, float y, float z, float x2, float y2, float z2)
 
 
 bool	active = TRUE;		// Window Active Flag Set To TRUE By Default
-bool	fullscreen = TRUE;	// Fullscreen Flag Set To Fullscreen Mode By Default
+bool	fullscreen = FALSE;	// Fullscreen Flag Set To Fullscreen Mode By Default
 
 
 
@@ -84,22 +82,26 @@ void LimitCoord(coord input, int min, int max)
 
 
 
+Sound* sound;
+BotManager* bots;
+Textures* textures;
+Terrain* terrain;
+HUD* hud;
+Game* game;
+Render* render;
+Player* player;
+//Projectile* projectile;
 
 
 
 
 
+MSG		msg;									// Windows Message Structure
+static DWORD timer, DeltaT;
+int t;
 
-
-
-
-
-float randclr()
-{
-	srand(time(NULL) * 64);
-	float a = rndf();
-	return a;
-}
+DWORD tickpre;
+DWORD tickpost;
 
 
 
@@ -384,9 +386,15 @@ LRESULT CALLBACK WndProc(HWND	hWnd,			// Handle For This Window
 		// The High-Order Word Specifies The Minimized State Of The Window Being Activated Or Deactivated.
 		// A NonZero Value Indicates The Window Is Minimized.
 		if ((LOWORD(wParam) != WA_INACTIVE) && !((BOOL)HIWORD(wParam)))
+		{
 			active = TRUE;						// Program Is Active
+			input->windowFocused = true;
+		}
 		else
+		{
 			active = FALSE;						// Program Is No Longer Active
+			input->windowFocused = false;
+		}
 		return 0;								// Return To The Message Loop
 	}
 	case WM_SYSCOMMAND:							// Intercept System Commands
@@ -459,18 +467,159 @@ LRESULT CALLBACK WndProc(HWND	hWnd,			// Handle For This Window
 	// Pass All Unhandled Messages To DefWindowProc
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
+
+void init() {
+
+
+	sound = new Sound();
+	bots = new BotManager();
+	textures = new Textures();
+	terrain = new Terrain();
+	hud = new HUD();
+	game = new Game(hud, input, terrain);
+	render = new Render();
+	player = new Player();
+	//projectile = new Projectile();
+	network->bindReferences(hud, terrain, player);
+	terrain->bindReferences(bots, game, player);
+
+	sound->InitWave();
+
+	terrain->BuildScene(true, true);
+	//terrain->Fractal();
+
+	game->mode = GameModes::menu;//game;
+	game->Menu = true;
+
+	//player->xpos = landsizeh;
+	//player->zpos = landsizeh;
+	player->ypos = terrain->scene[(int)player->xpos][(int)player->zpos].h + 32;
+	player->yrot = 0;
+
+	render->DrawCube = true;
+	//terrain->BuildScene(false, false);
+	//	setup_opengl( width, height );
+	textures->Build();
+
+}
+
+void mainLoop() {
+	GLenum err;
+	while ((err = glGetError()) != GL_NO_ERROR)
+	{
+		err = err;
+	}
+
+
+	TICKWIN = GetTickCount();
+	TICKFRM--;
+	if (GetTickCount() - timer > 1486 - DeltaT)
+	{
+		timer = GetTickCount();
+		t++;
+
+		sound->Proc();
+	}
+	DeltaT = GetTickCount() - timer;
+
+	const int networkTickms = 100;
+
+	if (GetTickCount() - networkingTick > networkTickms) {
+		network->mainLoop();
+	}
+
+	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))	// Is There A Message Waiting?
+	{
+		if (msg.message == WM_QUIT)				// Have We Received A Quit Message?
+		{
+			done = TRUE;							// If So done=TRUE
+		}
+		else									// If Not, Deal With Window Messages
+		{
+			TranslateMessage(&msg);				// Translate The Message
+			DispatchMessage(&msg);				// Dispatch The Message
+		}
+	}
+	else										// If There Are No Messages
+	{
+
+
+		if (input->keys[VK_ESCAPE].Hit)	// Active?  Was There A Quit Received?  && !DrawGLScene()     active
+		{
+			if (input->enteringText) {
+
+				input->enteringText = false;
+				input->enteredText.clear();
+			}
+			else {
+
+				if (game->Cheat)done = TRUE;							// ESC or DrawGLScene Signalled A Quit
+				else
+					hud->SwitchMenu(*game);
+			}
+		}
+
+		tickpre = GetTickCount();
+
+		render->Cycle(*terrain, *player, *textures, *game, *hud, *sound, *bots, *input);
+		bots->Process(*terrain, *game, *player, *sound);
+
+
+
+
+
+
+		input->Check(*bots, *sound, *terrain, *player, *hud, *game);
+		input->ClearKeys();
+		//}			
+		//DWORD tickwhile2=GetTickCount();
+
+
+		if (true && simulateFPSdrops)
+			Sleep(rand() % 512);
+
+
+		tickpost = GetTickCount();
+
+		int rendertime = tickpost - tickpre;
+
+
+		if (rendertime <= DELTA)
+		{
+			Sleep(DELTA - rendertime);
+			deltaTick = 1.0f;
+		}
+		else
+		{
+			deltaTick = float(rendertime) / float(DELTA);
+
+		}
+	}
+	if (input->keys[VK_F1].press)						// Is F1 Being Pressed?
+	{
+		input->keys[VK_F1].press = FALSE;					// If So Make Key FALSE
+		KillGLWindow();						// Kill Our Current Window
+		fullscreen = !fullscreen;				// Toggle Fullscreen / Windowed Mode
+		// Recreate Our OpenGL Window
+		if (!CreateGLWindow("NeHe's Solid Object Tutorial", SCREEN_W, SCREEN_H, 16, fullscreen))
+		{
+			return;						// Quit If Window Was Not Created
+		}
+	}
+
+}
+
+
+
 int WINAPI WinMain(HINSTANCE	hInstance,			// Instance
 	HINSTANCE	hPrevInstance,		// Previous Instance
-	LPSTR		lpCmdLine,			// Command Line Parameters
+	LPSTR		lpCmdLine,			// Command PrintLine Parameters
 	int			nCmdShow)			// Window Show State
 {
-	MSG		msg;									// Windows Message Structure
 	//BOOL	done=FALSE;								// Bool Variable To Exit Loop
-	static DWORD timer, DeltaT;
-	int t = 0;
 
-	DWORD tickpre = GetTickCount();
-	DWORD tickpost = GetTickCount();
+	tickpre = GetTickCount();
+	tickpost = GetTickCount();
 
 	bool SKIPWAITING = false;
 	// Ask The User Which Screen Mode They Prefer
@@ -479,132 +628,20 @@ int WINAPI WinMain(HINSTANCE	hInstance,			// Instance
 		{
 			fullscreen = FALSE;							// Windowed Mode
 		}
-	fullscreen = TRUE;
+	//fullscreen = FALSE;
 	// Create Our OpenGL Window
-	if (!CreateGLWindow("64kb", SCREEN_W, SCREEN_H, 32, fullscreen))
+	if (!CreateGLWindow("64kb", fullscreen ? SCREEN_W : SCREEN_W/2, fullscreen ? SCREEN_H : SCREEN_H/2, 32, fullscreen))
 	{
 		return 0;									// Quit If Window Was Not Created
 	}
 
 	//DWORD tickwhile;
 
-
-
-	Sound* sound = new Sound();
-	Game* game = new Game();
-	BotManager* bots = new BotManager();
-	Textures* textures = new Textures();
-	Terrain* terrain = new Terrain();
-	HUD* hud = new HUD();
-	Render* render = new Render();
-	Player* player = new Player();
-	Projectile* projectile = new Projectile();
-
-	sound->InitWave();
-	
-	terrain->BuildScene(*bots, *game, *player, true, true);
-
-	game->mode = GameModes::menu;//game;
-	game->Menu = true;
-
-	player->xpos = landsizeh;
-	player->zpos = landsizeh;
-	player->ypos = terrain->scene[(int)player->xpos][(int)player->zpos].h + 32;
-	player->yrot = 0;
-
-	render->DrawCube = true;
-	terrain->BuildScene(*bots, *game, *player, false, false);
-	//	setup_opengl( width, height );
-	textures->Build();
-	
+	init();
 
 	while (!done)									// Loop That Runs While done=FALSE
 	{
-		GLenum err;
-		while ((err = glGetError()) != GL_NO_ERROR)
-		{
-			err = err;
-		}
-
-
-		TICKWIN = GetTickCount();
-		TICKFRM--;
-		if (GetTickCount() - timer > 1486 - DeltaT)
-		{
-			timer = GetTickCount();
-			t++;
-
-			sound->Proc();
-		}
-		DeltaT = GetTickCount() - timer;
-
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))	// Is There A Message Waiting?
-		{
-			if (msg.message == WM_QUIT)				// Have We Received A Quit Message?
-			{
-				done = TRUE;							// If So done=TRUE
-			}
-			else									// If Not, Deal With Window Messages
-			{
-				TranslateMessage(&msg);				// Translate The Message
-				DispatchMessage(&msg);				// Dispatch The Message
-			}
-		}
-		else										// If There Are No Messages
-		{
-
-
-			if (input->keys[VK_ESCAPE].Hit)	// Active?  Was There A Quit Received?  && !DrawGLScene()     active
-			{
-				if (game->Cheat)done = TRUE;							// ESC or DrawGLScene Signalled A Quit
-				else
-					hud->SwitchMenu(*game);
-			}
-
-			tickpre = GetTickCount();
-
-			render->Cycle(*terrain, * player, * textures, * game, * hud, * sound, * bots, * input);
-			bots->Process(*terrain, * game, * player, * sound);
-
-
-
-
-
-
-			if (!game->Stop)input->Check(*bots, *sound, *terrain, *player, *hud, *game, *projectile);
-			input->ClearKeys();
-			//}			
-			//DWORD tickwhile2=GetTickCount();
-
-
-
-			tickpost = GetTickCount();
-
-			int rendertime = tickpost - tickpre;
-
-
-			if (rendertime <= DELTA)
-			{
-				Sleep(DELTA - rendertime);
-				T = 1.0f;
-			}
-			else
-			{
-				T = (rendertime) / DELTA;
-			}
-		}
-		if (input->keys[VK_F1].press)						// Is F1 Being Pressed?
-		{
-			input->keys[VK_F1].press = FALSE;					// If So Make Key FALSE
-			KillGLWindow();						// Kill Our Current Window
-			fullscreen = !fullscreen;				// Toggle Fullscreen / Windowed Mode
-			// Recreate Our OpenGL Window
-			if (!CreateGLWindow("NeHe's Solid Object Tutorial", SCREEN_W, SCREEN_H, 16, fullscreen))
-			{
-				return 0;						// Quit If Window Was Not Created
-			}
-		}
-
+		mainLoop();
 
 
 	}

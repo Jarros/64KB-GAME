@@ -18,6 +18,22 @@ HUD::HUD()
 	slot = Slots::HANDS;
 }
 
+void HUD::PrintConsole(std::string str, HUD::eChatClr eClr) {
+	//MessageBox(NULL, str.c_str(), "print", MB_OK);
+	if (true && chat_i == 255) {
+		for (std::string& str : chat) {
+			str.clear();
+		}
+		return;
+	}
+	chat_i++;
+	chat_i = chat_i % 256;
+	chat[chat_i] = str;
+	chatClrs[chat_i] = eClr;
+	return;
+}
+
+
 void HUD::Line2D(coord x, coord y, coord x2, coord y2, coord width)
 {
 	float v[] = { x,y };
@@ -32,40 +48,64 @@ void HUD::Line2D(coord x, coord y, coord x2, coord y2, coord width)
 }
 
 
-bool HUD::GetFontQuad(char st, coord x, coord y)
+bool HUD::GetFontQuad(unsigned char st, coord x, coord y)
 {
-	if (st == number) { return font_number[x][y]; }
-	else
-		if (st == letter) { return font_letter[x][y]; }
-
+	switch (st) {
+	case space:
+		return false;
+	case number:
+		return font_number[x][y];
+	case letter:
+		return font_letter[x][y];
+	case symbol1:
+		return font_symbol1[x][y];
+	case symbol2:
+		return font_symbol2[x][y];
+	default:
+		return true;
+	}
 }
 
-void HUD::Symbol(char chr, coord xpos, coord ypos, coord size, bool Italics)
+void HUD::Symbol(unsigned char chr, coord xpos, coord ypos, coord size, bool Italics)
 {
 	//float v[] = {x,y};
 	char chrb;
 
-	if (chr >= symbol1 && chr < number)
+	if (chr >= symbol1 && chr < number) // ! - /
 		chrb = symbol1;
 	else
-		if (chr >= number && chr < symbol2)
+		if (chr >= number && chr < symbol2) // 0 - 9
 			chrb = number;
 		else
-			if (chr >= symbol2 && chr < letter)
+			if (chr >= symbol2 && chr < letter) // : - @
 				chrb = symbol2;
 			else
-				if (chr >= letter && chr < symbol3)
+				if (chr >= letter && chr < symbol3) // A - Z
 					chrb = letter;
 				else
-					if (chr >= symbol3 && chr < number2)
+					if (chr >= symbol3 && chr < number2) // [ - '
 						chrb = symbol3;
 					else
-						if (chr >= number2 && chr <= 122)
+						if (chr >= number2 && chr <= 122) // a - z
 						{
-							chr = chr - number2 + number; chrb = number;
+							chr = chr - number2 + letter; chrb = letter;
 						}
 						else
-							return;
+							switch (chr) {
+							case 190:
+								chr = '.';
+								chrb = symbol1;
+								break;
+							case 191:
+								chr = '/';
+								chrb = symbol1;
+								break;
+							case 32:
+								chr = ' ';
+								chrb = space;
+							default:
+								return;
+							}
 
 	char chrc = chr - chrb;
 	chrc *= 5;
@@ -95,13 +135,94 @@ void HUD::Symbol(char chr, coord xpos, coord ypos, coord size, bool Italics)
 }
 
 
-void HUD::Line(std::string st, coord xpos, coord ypos, coord size, bool Italics)
+void HUD::DrawChat(const Input& input)
+{
+
+	glLoadIdentity();
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 1, -1);
+
+	glDisable(GL_TEXTURE_2D);
+
+	glEnable(GL_BLEND);
+
+	glColor4f(0.2f, 0.2f, 0.2f, 0.1f);
+	glBegin(GL_QUADS);
+	//Line2D(96, SCREEN_HEIGHT - 288 + 64, 256 + 95 + 128, SCREEN_HEIGHT - 288 + 64, 16.0f);
+	glVertex2i(96, SCREEN_HEIGHT - 88 + 64);
+	glVertex2i(256 + 95 + 128, SCREEN_HEIGHT - 88 + 64);
+	glVertex2i(256 + 95 + 128, SCREEN_HEIGHT - 288 + 64);
+	glVertex2i(96, SCREEN_HEIGHT - 288 + 64);
+
+	glEnd();
+
+	glColor4f(1.0f, 1.0f, 0.5f, 1.0f);
+	glBegin(GL_QUADS);
+
+	//PrintLine(gamename, HSCREEN_WIDTH - 192, HSCREEN_HEIGHT - 64, 8, true);
+
+	glColor4f(1.0f, 1.0f, 0.5f, 0.5f);
+
+	if (menuselected < 0)menuselected = 0;
+	if (menuselected > 3)menuselected = 3;
+
+	float menuclr[] = { 1.0f,1.0f,1.0f };
+	const int size = 2;
+
+	for (int i = chat_i; i >= 0; i--)
+	{
+		switch (chatClrs[chat_i - i]) {
+		case eChatClr::default:
+			menuclr[0] = 1.0f;
+			menuclr[1] = 1.0f;
+			menuclr[2] = 1.0f;
+			break;
+		case eChatClr::red:
+			menuclr[0] = 1.0f;
+			menuclr[1] = 0.5f;
+			menuclr[2] = 0.5f;
+			break;
+		case eChatClr::green:
+			menuclr[0] = 0.5f;
+			menuclr[1] = 1.0f;
+			menuclr[2] = 0.5f;
+			break;
+		case eChatClr::blue:
+			menuclr[0] = 0.5f;
+			menuclr[1] = 0.5f;
+			menuclr[2] = 1.0f;
+
+			break;
+
+		}
+		bool sel = false;// (slot == menuselected);
+		glColor4f(menuclr[0], menuclr[1], menuclr[2], sel / 2.0f + 0.5f);
+		PrintLine(chat[chat_i-i], 96+16, SCREEN_HEIGHT - 288 + 64 + 7 * size * i + 16, size, sel);
+	}
+	if (input.enteringText)
+	{
+		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+		PrintLine("'", 96 - 8, SCREEN_HEIGHT - 288 + 64 + 7 * size * 0 - 16, 4, true);
+		PrintLine(input.enteredText, 96 + 16, SCREEN_HEIGHT - 288 + 64 + 7 * size * 0 - 16, 4, true);
+	}
+	glEnd();
+	glDisable(GL_BLEND);
+}
+
+void HUD::PrintLine(std::string st, coord xpos, coord ypos, coord size, bool Italics)
 {
 	coord xx = 0, space;
 	space = size * (4 + 2);
 	for (coord a = 0; a < st.length(); a++)
 	{
+		//if()
+		if (st[a] == ' ') {
+
+		}
+		else {
 		Symbol(st[a], xpos + xx, ypos, size, Italics);
+		}
 		xx += space;
 	}
 }
@@ -118,7 +239,7 @@ void HUD::SwitchMenu(Game& game)
 }
 
 
-void HUD::StartGame(Game& game)
+void HUD::StartGame(Game& game, Terrain& terrain, Player& player)
 {
 	game.Menu = 0;
 	game.Stop = 0;
@@ -183,7 +304,7 @@ void HUD::DrawMenu(BotManager& bots, Game& game, Player& player, Terrain& terrai
 	glColor4f(1.0f, 1.0f, 0.5f, 1.0f);
 	glBegin(GL_QUADS);
 
-	Line(gamename, HSCREEN_WIDTH - 192, HSCREEN_HEIGHT - 64, 8, true);
+	PrintLine(gamename, HSCREEN_WIDTH - 192, HSCREEN_HEIGHT - 64, 8, true);
 
 	glColor4f(1.0f, 1.0f, 0.5f, 0.5f);
 
@@ -197,12 +318,12 @@ void HUD::DrawMenu(BotManager& bots, Game& game, Player& player, Terrain& terrai
 
 		switch (menuselected) {
 		case 0://START
-			StartGame(game);
+			StartGame(game, terrain, player);
 			break;
 		case 1://SETTINGS
 			break;
 		case 2://NEW MAP
-			terrain.BuildScene(bots, game, player, true, true);
+			terrain.BuildScene(true, true);
 			break;
 		case 3://EXIT
 			done = true;
@@ -225,7 +346,7 @@ void HUD::DrawMenu(BotManager& bots, Game& game, Player& player, Terrain& terrai
 	{
 		bool sel = (slot == menuselected);
 		glColor4f(menuclr[0], menuclr[1], menuclr[2], sel / 2.0f + 0.5f);
-		Line(Menus[slot], HSCREEN_WIDTH - 128, HSCREEN_HEIGHT + 7 * size * slot, size, sel);
+		PrintLine(Menus[slot], HSCREEN_WIDTH - 128, HSCREEN_HEIGHT + 7 * size * slot, size, sel);
 	}
 	glEnd();
 	glDisable(GL_BLEND);
@@ -265,8 +386,8 @@ void HUD::DrawHUD(Player& player)
 
 	glBegin(GL_QUADS);
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	Line("HEALTH", 104, SCREEN_HEIGHT - 313, 2.0f, false);
-	if (player.GetWeapon(slot).Ammo > 0)Line("AMMO", 104, SCREEN_HEIGHT - 261, 2.0f, false);
+	PrintLine("HEALTH", 104, SCREEN_HEIGHT - 313, 2.0f, false);
+	if (player.GetWeapon(slot).Ammo > 0)PrintLine("AMMO", 104, SCREEN_HEIGHT - 261, 2.0f, false);
 	glEnd();
 
 	glColor4f(0.2f, 0.2f, 0.2f, 0.2f);

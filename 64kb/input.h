@@ -20,7 +20,10 @@ enum class State : byte
 class Input
 {
 public:
-	void Check(BotManager& bots, Sound& sound, Terrain& terrain, Player& player, HUD& hud, Game& game, Projectile& projectile);
+	bool enteringText = false; 
+	std::string enteredText = "";
+	bool windowFocused = false;
+	void Check(BotManager& bots, Sound& sound, Terrain& terrain, Player& player, HUD& hud, Game& game);
 	void ClearKeys();
 	bool Hand = 0;
 	struct Key
@@ -54,7 +57,9 @@ private:
 	float accel_;
 
 
+	void Chat();
 
+	void ChatEnter(HUD& hud, Game& game);
 
 	bool Hit(Terrain& terrain, const Player& player, BotManager& bots, float dist, float precision, int damage, bool destroyblocks, float pushforce, float maxdist, bool blood);
 
@@ -70,6 +75,8 @@ private:
 
 
 	void SmoothCamera(Terrain& terrain, Player& player, Game& game);
+
+	void ProcChr(HUD& hud, Game& game);
 
 
 };

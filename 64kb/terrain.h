@@ -16,10 +16,15 @@ enum class Objects : byte
 
 class Terrain
 {
+	private:
+		BotManager* bots_; 
+		Game* game_; 
+		Player* player_;
 public:
+	void bindReferences(BotManager* bots, Game* game, Player* player);
 	bool AddCube(coord x, coord y, coord z, Objects type, bool using_adapted_coords);
-	void BuildScene(BotManager& bots, const Game& game, Player& player, bool rebuildgeo, bool rebuildclr);
-
+	//void BuildScene(BotManager& bots, const Game& game, Player& player, bool rebuildgeo, bool rebuildclr);
+	unsigned long seed_ = 0;
 
 	struct Castle
 	{
@@ -50,6 +55,7 @@ public:
 	
 	int cubenum[chunkx][chunkz];
 	bool IsGrass(worldgrid a) const;
+	void BuildScene(bool rebuildgeo, bool rebuildclr, long long int seed = 0);
 	void Smooth();
 	worldgrid SafeScene(int xpos, int zpos);
 	bool OnLevel(float x, float y, float z);
@@ -57,6 +63,7 @@ public:
 private:
 	coord a_;
 	float buffer_[chunkx * chunksize][chunkz * chunksize];
+	//std::vector<float> buffer_[;
 	//coord x,y;
 
 
@@ -94,7 +101,7 @@ private:
 
 	void BuildCastles();
 
-	void Fractal();
+	void Fractal(long long int seed);
 
 
 

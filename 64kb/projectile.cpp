@@ -73,20 +73,22 @@ void Projectile::Explode(BotManager &bots, Terrain& terrain, Sound& sound)
 }
 void Projectile::Move(BotManager& bots, Terrain& terrain, Sound& sound)
 {
-	TICK += T;
+	if (!IsExists)
+		return;
+	TICK += deltaTick;
 
 	if (TICK > 200)
 		Explode(bots, terrain, sound);
 	accel += 0.01f;
-	px += mx * T;
-	py = -GRAVITY * TICK * TICK / 2 + my * TICK + ystart;    //(my-accel)*T;
-	pz += mz * T;
+	px += mx * deltaTick;
+	py = -GRAVITY * TICK * TICK / 2 + my * TICK + ystart;    //(my-accel)*deltaTick;
+	pz += mz * deltaTick;
 	int x2 = (int)px, y2 = (int)py, z2 = (int)pz;
 
 	float rounding = 2.0f;
 
-	for (int x3 = -1; x3 < 1; x3++)
-		for (int z3 = -1; z3 < 1; z3++)
+	for (int x3 = -1; x3 <= 1; x3++)
+		for (int z3 = -1; z3 <= 1; z3++)
 		{
 			if ((int)(terrain.scene[x2 + x3][z2 + z3].h / rounding) == (int)(y2 / rounding))
 			{
@@ -101,7 +103,7 @@ void Projectile::Move(BotManager& bots, Terrain& terrain, Sound& sound)
 
 bool Projectile::MakeRocket(int a, float x, float y, float z, float vecx, float vecy, float vecz, float dmg, float dmgrad)
 {
-	for (coord b = 0; b < 10; b++)
+	//for (coord b = 0; b < 10; b++)
 	{
 		if (!/*proj[b].*/IsExists)
 		{
@@ -111,3 +113,5 @@ bool Projectile::MakeRocket(int a, float x, float y, float z, float vecx, float 
 	}
 	return false;
 }
+
+Projectile projectile;

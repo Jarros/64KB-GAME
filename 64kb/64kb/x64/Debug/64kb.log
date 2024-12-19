@@ -1,0 +1,35 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\amd64\Microsoft.Common.CurrentVersion.targets(2175,5): warning MSB9008: The referenced project '..\PHYSICS-BULLET\BulletBin\src\BulletCollision\BulletCollision.vcxproj' does not exist.
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\amd64\Microsoft.Common.CurrentVersion.targets(2175,5): warning MSB9008: The referenced project '..\PHYSICS-BULLET\BulletBin\src\BulletDynamics\BulletDynamics.vcxproj' does not exist.
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\amd64\Microsoft.Common.CurrentVersion.targets(2175,5): warning MSB9008: The referenced project '..\PHYSICS-BULLET\BulletBin\src\LinearMath\LinearMath.vcxproj' does not exist.
+  main.cpp
+C:\Dev\64kb\64kb\main.h(48,18): warning C4305: 'initializing': truncation from 'double' to 'float'
+  (compiling source file 'main.cpp')
+  
+C:\Dev\64kb\64kb\main.h(49,28): warning C4305: 'initializing': truncation from 'double' to 'float'
+  (compiling source file 'main.cpp')
+  
+C:\Dev\64kb\64kb\main.h(97,9): warning C4305: '=': truncation from 'double' to 'float'
+  (compiling source file 'main.cpp')
+  
+C:\Dev\64kb\64kb\main.h(219,33): warning C4305: 'initializing': truncation from 'double' to 'const float'
+  (compiling source file 'main.cpp')
+  
+C:\Dev\64kb\64kb\terrain.h(5,8): warning C4099: 'BotManager': type name first seen using 'class' now seen using 'struct'
+  (compiling source file 'main.cpp')
+      C:\Dev\64kb\64kb\projectile.h(4,7):
+      see declaration of 'BotManager'
+  
+C:\Dev\64kb\64kb\terrain.h(6,8): warning C4099: 'Game': type name first seen using 'class' now seen using 'struct'
+  (compiling source file 'main.cpp')
+      C:\Dev\64kb\64kb\game.h(15,7):
+      see declaration of 'Game'
+  
+C:\Dev\64kb\64kb\terrain.h(7,8): warning C4099: 'Player': type name first seen using 'class' now seen using 'struct'
+  (compiling source file 'main.cpp')
+      C:\Dev\64kb\64kb\network.h(7,7):
+      see declaration of 'Player'
+  
+C:\Dev\64kb\64kb\main.cpp(76,7): warning C4834: discarding return value of function with [[nodiscard]] attribute
+C:\Dev\64kb\64kb\main.cpp(316,3): warning C4838: conversion from 'int' to 'BYTE' requires a narrowing conversion
+C:\Dev\64kb\64kb\main.cpp(650,13): warning C4244: 'return': conversion from 'WPARAM' to 'int', possible loss of data
+  64kb.vcxproj -> C:\Dev\64kb\64kb\x64\Debug\64kb.exe

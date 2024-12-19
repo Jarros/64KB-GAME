@@ -1,0 +1,39 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\amd64\Microsoft.Common.CurrentVersion.targets(2116,5): warning : The referenced project '..\PHYSICS-BULLET\BulletBin\src\BulletCollision\BulletCollision.vcxproj' does not exist.
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\amd64\Microsoft.Common.CurrentVersion.targets(2116,5): warning : The referenced project '..\PHYSICS-BULLET\BulletBin\src\BulletDynamics\BulletDynamics.vcxproj' does not exist.
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\amd64\Microsoft.Common.CurrentVersion.targets(2116,5): warning : The referenced project '..\PHYSICS-BULLET\BulletBin\src\LinearMath\LinearMath.vcxproj' does not exist.
+  projectile.cpp
+C:\Dev\64kb\64kb\main.h(39,40): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Dev\64kb\64kb\main.h(40,35): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Dev\64kb\64kb\main.h(194,47): warning C4305: 'initializing': truncation from 'double' to 'const float'
+C:\Dev\64kb\64kb\bots.h(11,25): warning C4099: 'BotManager': type name first seen using 'struct' now seen using 'class'
+C:\Dev\64kb\64kb\Projectile.h(4,8): message : see declaration of 'BotManager'
+C:\Dev\64kb\64kb\bots.h(31,1): warning C4099: 'BotManager': type name first seen using 'struct' now seen using 'class'
+C:\Dev\64kb\64kb\bots.h(30,7): message : see declaration of 'BotManager'
+C:\Dev\64kb\64kb\terrain.h(5,18): warning C4099: 'BotManager': type name first seen using 'class' now seen using 'struct'
+C:\Dev\64kb\64kb\bots.h(30,7): message : see declaration of 'BotManager'
+C:\Dev\64kb\64kb\terrain.h(18,1): warning C4099: 'Terrain': type name first seen using 'struct' now seen using 'class'
+C:\Dev\64kb\64kb\terrain.h(17,7): message : see declaration of 'Terrain'
+C:\Dev\64kb\64kb\sound.h(9,1): warning C4099: 'Sound': type name first seen using 'struct' now seen using 'class'
+C:\Dev\64kb\64kb\sound.h(8,7): message : see declaration of 'Sound'
+C:\Dev\64kb\64kb\projectile.cpp(41,30): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\projectile.cpp(41,26): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\projectile.cpp(41,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\projectile.cpp(44,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Dev\64kb\64kb\projectile.cpp(46,15): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Dev\64kb\64kb\projectile.cpp(48,27): warning C4244: 'initializing': conversion from 'float' to 'coord', possible loss of data
+C:\Dev\64kb\64kb\projectile.cpp(49,80): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\projectile.cpp(49,52): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\projectile.cpp(49,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\projectile.cpp(52,37): warning C4244: '-=': conversion from 'float' to 'unsigned char', possible loss of data
+C:\Dev\64kb\64kb\projectile.cpp(54,37): warning C4244: '-=': conversion from 'float' to 'unsigned char', possible loss of data
+C:\Dev\64kb\64kb\projectile.cpp(60,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Dev\64kb\64kb\projectile.cpp(62,15): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Dev\64kb\64kb\projectile.cpp(64,16): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Dev\64kb\64kb\projectile.cpp(66,15): warning C4244: 'initializing': conversion from 'float' to 'coord', possible loss of data
+C:\Dev\64kb\64kb\projectile.cpp(66,34): warning C4244: 'initializing': conversion from 'float' to 'coord', possible loss of data
+C:\Dev\64kb\64kb\projectile.cpp(66,53): warning C4244: 'initializing': conversion from 'float' to 'coord', possible loss of data
+C:\Dev\64kb\64kb\projectile.cpp(23,6): warning C4101: 'x4': unreferenced local variable
+C:\Dev\64kb\64kb\projectile.cpp(23,14): warning C4101: 'z4': unreferenced local variable
+C:\Dev\64kb\64kb\projectile.cpp(23,10): warning C4101: 'y4': unreferenced local variable
+C:\Dev\64kb\64kb\projectile.cpp(78,10): warning C4244: '+=': conversion from 'float' to 'coord', possible loss of data
+  64kb.vcxproj -> C:\Dev\64kb\64kb\x64\Debug\64kb.exe

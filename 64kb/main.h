@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 #include <iostream>
 #include <windows.h>		// Header File For Windows
 #include <gl\gl.h>			// Header File For The OpenGL32 Library
@@ -10,6 +11,14 @@
 #include <math.h>
 
 
+template <typename T>
+T clamp(const T& n, const T& lower, const T& upper) {
+	return max(lower, min(n, upper));
+}
+
+//const bool	active = TRUE;		// Window Active Flag Set To TRUE By Default
+//extern bool	fullscreen;	// Fullscreen Flag Set To Fullscreen Mode By Default
+
 void Message(char* message);
 
 int rnd(int from, int to);
@@ -18,7 +27,7 @@ float rndf();
 
 const std::string gamename = "   64KB   ";
 
-extern float T;
+extern float deltaTick;
 
 typedef unsigned char ubyte;
 
@@ -60,6 +69,8 @@ void seedrand_tick();
 
 void SwapBuffers();
 
+void mainLoop();
+
 class Vector2D
 {
 public:
@@ -80,8 +91,21 @@ public:
 
 	void MakeFromXY(float x, float y)
 	{
-		if (x != 0)
+		if (true)//TODO
+		{
+			if (false && x == 0)
+				x = 0.000001;
+
+			if (x != 0)
 			angle = atan(y / x);
+		}
+		else {
+
+			if (x != 0)
+				angle = atan(y / x);
+			else
+				angle = PI / 2;
+		}
 		scalar = sqrt(y * y + x * x);
 
 		//if(x<0 && y>0)angle=PI-angle;
@@ -162,7 +186,7 @@ const float ADD_HEIGHT = 10.0f;
 
 
 const int terx = chunkx * chunksize, terz = chunkz * chunksize, ters = terx * terz, terh = 32, terxh = terx / 2, terzh = terz / 2;
-
+const int terxl = terx - 1, terzl = terz - 1;
 const coord CUBES_MAX = ters;
 
 
@@ -174,6 +198,7 @@ const float GRAVITY = 0.04f;
 
 
 #define FPS 60
+const bool simulateFPSdrops = false;
 const DWORD DELTA = 1000 / FPS;
 #define PI            3.14159265358979
 

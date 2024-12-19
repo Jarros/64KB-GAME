@@ -4,6 +4,7 @@
 #include "player.h"
 #include "game.h"
 #include "sound.h"
+#include <math.h>
 
 void Bot::Kill()
 {
@@ -13,11 +14,11 @@ void Bot::Kill()
 
 bool Bot::NewPosition(const Terrain& terrain)
 {
-	randyr = rand() % 360;
+	//randyr = rand() % 360;
 	for (int tries = 0; tries < 16; tries++)
 	{
-		x = rand() % terx;
-		z = rand() % terz;
+		//x = rand() % terx;
+		//z = rand() % terz;
 		if (terrain.scene[(int)x][(int)z].h > WATER_HEIGHT)
 			return true;
 	}
@@ -38,6 +39,9 @@ bool Bot::Spawn(const Terrain& terrain)
 void Bot::BreakWalls(Terrain& terrain)
 {
 	coord xc = (int)(x / 2) + rnd(-1, 1), yc = (int)(y / 2) + rnd(-1, 1), zc = (int)(z / 2) + rnd(-1, 1);
+	xc = clamp(xc, (coord)0, (coord)(terxh-1));
+	yc = clamp(yc, (coord)0, (coord)(128-1));
+	zc = clamp(zc, (coord)0, (coord)(terzh-1));
 	if (terrain.cubescene[xc][yc][zc].type != Objects::NONE)
 	{
 		terrain.cubescene[xc][yc][zc].type = Objects::NONE;
@@ -128,8 +132,8 @@ void Bot::Process(Terrain& terrain, const Game &game, Player &player, Sound &sou
 
 		}
 		BreakWalls(terrain);
-		x += x3 * T / sped;
-		z += z3 * T / sped;
+		x += x3 * deltaTick / sped;
+		z += z3 * deltaTick / sped;
 	}
 }
 

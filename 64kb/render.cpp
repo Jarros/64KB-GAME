@@ -9,6 +9,7 @@
 #include "hud.h"
 #include "sound.h"
 #include "bots.h"
+#include "projectile.h"
 
 void Render::Rotate(float angle_pitch, float angle_yaw, float angle_roll)
 {
@@ -199,18 +200,20 @@ void Render::Grass(const ::Terrain &terrain, const Player &player) {
 
 }
 
-void Render::SpecialObjects()
+void Render::SpecialObjects(const Textures& textures)
 {
 	glFrontFace(GL_CCW);
-	/*
+	
 
 	for (coord a = 0; a < 10; a++)
-			if (IsExists)
 	{
-		render.Projectile(proj[a].px, proj[a].py, proj[a].pz, textures.GetWeapon(Slots::BAZOOKA).B);
-		Move();
+		if (projectile.IsExists)
+		{
+			Projectile(projectile.px, projectile.py, projectile.pz, textures.GetWeaponTexture(Slots::SPADE).B);
+			
+		}
 	}
-		*/
+		
 }
 
 void Render::Cubes(const ::Terrain& terrain, const Player& player, const Textures& textures)
@@ -354,13 +357,18 @@ void Render::Menu(::BotManager& bots, Game& game, Player& player, ::HUD& hud, ::
 	{
 		hud.DrawMenu(bots, game, player, terrain, input, sound);
 	}
+	if (true)
+	{
+	}
 }
 
 
-void Render::HUD(Player& player, const Game& game, ::HUD &hud)
+void Render::HUD(Player& player, const Game& game, ::HUD &hud, const Input& input)
 {
-	if (!game.Menu)
+	if (!game.Menu) {
 		hud.DrawHUD(player);
+		hud.DrawChat(input);
+	}
 }
 
 
@@ -420,7 +428,8 @@ void Render::Cycle(::Terrain& terrain, Player& player, Textures& textures, Game&
 
 	Grass(terrain, player);
 
-	SpecialObjects();
+	SpecialObjects(textures);
+	projectile.Move(bots, terrain, sound);
 
 	BotManager(bots, textures);
 
@@ -440,14 +449,14 @@ void Render::Cycle(::Terrain& terrain, Player& player, Textures& textures, Game&
 
 	Hands(game, textures, input, player, hud);
 
-	HUD(player, game, hud);
+	HUD(player, game, hud, input);
 
 	SwapBuffers();
 }
 
 
 
-void Render::Line(float x, float y, float z, float x2, float y2, float z2, ubyte r, ubyte g, ubyte b, ubyte a, float width, bool machinegun)
+void Render::PrintLine(float x, float y, float z, float x2, float y2, float z2, ubyte r, ubyte g, ubyte b, ubyte a, float width, bool machinegun)
 {
 	float v[] = { x,y,z };
 	float v2[] = { x2,y2,z2 };
@@ -610,6 +619,7 @@ void Render::Hands(const Game& game, const Textures& textures, const Input& inpu
 	if (game.Menu)
 		return;
 
+
 	glDisable(GL_DEPTH_TEST);
 	if (player.InWater())
 		glColor4f(0.7f, 0.7f, 1.0f, 1.0f);
@@ -624,7 +634,7 @@ void Render::Hands(const Game& game, const Textures& textures, const Input& inpu
 		}
 		else
 		{
-			static int i = rand() % 2;
+			static int i = 0;// rand() % 2;
 			if (input.LMB.press && input.Hand)
 				Box(-1.5f, -2.75f, -1.5f, 1.0f, 1.0f, 4.0f, 45.0f + rndf(), -0.0f + rndf(), -0 + rndf(), textures.GetWeaponTexture(Slots::HANDS).A);
 			else
@@ -638,17 +648,17 @@ void Render::Hands(const Game& game, const Textures& textures, const Input& inpu
 	case Slots::SPADE:
 		if (input.LMB.press)
 		{
-			Box(1.0f, -2.25f, -1.5f, -0.75f, 0.75f, 4.0f, 45.0f + rndf(), 0.0f + rndf(), 0.0f + rndf(), textures.GetWeaponTexture(Slots::HANDS).A);
+			Box(1.0f, -2.25f, -1.5f, -0.75f, 0.75f, 4.0f, 45.0f + rndf(), 0.0f + rndf(), 0.0f + rndf(), textures.GetWeaponTexture(Slots::SPADE).A);
 		}
 		else
 		{
 			if (input.RMB.press)
 			{
-				Box(1.0f, -2.25f, 1.5f, -0.75f, 0.75f, 4.0f, 20.0f + rndf(), 0.0f + rndf(), 0.0f + rndf(), textures.GetWeaponTexture(Slots::HANDS).A);
+				Box(1.0f, -2.25f, -1.5f, -0.75f, 0.75f, 4.0f, 20.0f + rndf(), 0.0f + rndf(), 0.0f + rndf(), textures.GetWeaponTexture(Slots::SPADE).A);
 			}
 			else
 			{
-				Box(1.25f, -1.75f, -1.75f, -0.75f, 0.75f, 4.0f, 60.0f, -0.0f, 0.0f, textures.GetWeaponTexture(Slots::HANDS).A);
+				Box(1.25f, -1.75f, -1.75f, -0.75f, 0.75f, 4.0f, 60.0f, -0.0f, 0.0f, textures.GetWeaponTexture(Slots::SPADE).A);
 			}
 		}
 		break;
@@ -678,12 +688,12 @@ void Render::Hands(const Game& game, const Textures& textures, const Input& inpu
 			float rnd1 = rndf() / 4.0f, rnd2 = rndf() * 2.0f;
 
 			glEnable(GL_DEPTH_TEST);
-			Line(0.25f, -0.25f, -0.5f, 0.15f + rnd(-4, 3), -0.25f + rnd(-4, 3), -0.5f - 256.0f + rnd1, rand() % 30 + 200, rand() % 50 + 206, 150, 100, rand() % 16 / 8.0f, true);
-			Line(0.25f, -0.25f, -0.5f, 0.15f + rnd(-4, 3), -0.25f + rnd(-4, 3), -0.5f - 256.0f + rnd1, rand() % 30 + 200, rand() % 50 + 206, 150, 100, rand() % 16 / 8.0f, true);
+			PrintLine(0.25f, -0.25f, -0.5f, 0.15f + rnd(-4, 3), -0.25f + rnd(-4, 3), -0.5f - 256.0f + rnd1, rand() % 30 + 200, rand() % 50 + 206, 150, 100, rand() % 16 / 8.0f, true);
+			PrintLine(0.25f, -0.25f, -0.5f, 0.15f + rnd(-4, 3), -0.25f + rnd(-4, 3), -0.5f - 256.0f + rnd1, rand() % 30 + 200, rand() % 50 + 206, 150, 100, rand() % 16 / 8.0f, true);
 			glDisable(GL_DEPTH_TEST);
 			coord b = rnd(24, 39);
 			for (int a = 0; a < b; a++)
-				Line(0.25f, -0.25f, -0.75f + rnd1, 0.25f + rand() % 8 / 32.0f - 0.125, -0.25f + rand() % 8 / 32.0f - 0.125f, -1.25f + rnd1, rand() % 26 + 230, rand() % 30 + 160, 120, 120, 2.0f + rand() % 8 / 2.0f, true);
+				PrintLine(0.25f, -0.25f, -0.75f + rnd1, 0.25f + rand() % 8 / 32.0f - 0.125, -0.25f + rand() % 8 / 32.0f - 0.125f, -1.25f + rnd1, rand() % 26 + 230, rand() % 30 + 160, 120, 120, 2.0f + rand() % 8 / 2.0f, true);
 
 			Box(2.0f, -3.25f, -5.0f + rnd1, 0.5f, 1.0f, 0.25f, 0.0f + rnd2, 0.0f, 0.0f, textures.GetWeaponTexture(Slots::MACHINEGUN).B);
 			Box(2.0f, -2.0f, -4.0f + rnd1, 0.75f, 1.5f, 3.0f, 0.0f + rnd2, 0.0f, 0.0f, textures.GetWeaponTexture(Slots::MACHINEGUN).C);

@@ -26,7 +26,24 @@ void Input::ClearKeys()
 
 	LMB.TICK++;
 
+	if(windowFocused)
 	SetCursorPos(SCREEN_CENTER_X / 2, SCREEN_CENTER_Y / 2);
+}
+
+void Input::Chat() {
+	enteringText = true;
+}
+
+void Input::ChatEnter(HUD &hud, Game& game) {
+	//hud.chat_i++;
+	//hud.chat[hud.chat_i] = enteredText;
+	if(enteredText[0]=='/')
+		game.procCommand(enteredText);
+	else {
+		network->sendText(enteredText.c_str());
+	}
+	enteredText.clear();
+	enteringText = false;
 }
 
 
@@ -162,6 +179,7 @@ void Input::Dig(Terrain& terrain, Player& player, const HUD& hud, Sound& sound, 
 					if (terrain.cubescene[xo][h + h2][zo].type == Objects::NONE)
 					{
 						xdeb = xo; ydeb = h + h2; zdeb = zo;
+						break;
 					}
 				}
 				if (terrain.cubescene[xo][ydeb - 1][zo].type == Objects::CRATE)
@@ -233,9 +251,10 @@ void Input::Gravity(Player& player, const Terrain &terrain)
 
 		accel_ -= GRAVITY / (player.InWater() + 1);
 
-		if (accel_ < 0.0)
+		if (accel_ < 0.0 )
 		{
-			if ((terrain.scene[(int)(player.xpos)][(int)(player.zpos)].h - player.ypos) >= -CAM_HEIGHT && accel_ < 0.0)
+			if (((terrain.scene[(int)(player.xpos)][(int)(player.zpos)].h - player.ypos) >= -CAM_HEIGHT || 
+				terrain.cubescene[int(player.xpos + 0.5) / 2][int(player.ypos) / 2 - 3][int(player.zpos + 0.5) / 2].type == Objects::CONCRETE) && accel_ < 0.0)
 			{
 				accel_ = 0; state_ = State::walking;
 			}
@@ -248,88 +267,128 @@ void Input::Gravity(Player& player, const Terrain &terrain)
 
 void Input::Collision(Player& player, const Terrain& terrain)
 {
-	int finxmove = finalmove_.GetX();
-	int finzmove = finalmove_.GetY();
+	float finalX = 0.0;
+	float finalZ = 0.0;
+	//int x=int(xpos);
 
+	switch (state_)
+	{
+	//case State::walking:
+	default:
+
+		if (true) {
+			if (terrain.cubescene[int(player.xpos+0.5) / 2][int(player.ypos) / 2][int(player.zpos+0.5 - 0.5) / 2].type == Objects::CONCRETE)
+			{
+				if(finalmove_.GetY()<0.0f)
+					finalmove_.MakeFromXY(finalmove_.GetX(), 0);
+			}
+			if (terrain.cubescene[int(player.xpos + 0.5) / 2][int(player.ypos) / 2][int(player.zpos + 0.5 + 1.0) / 2].type == Objects::CONCRETE)
+			{
+				if (finalmove_.GetY() > 0.0f)
+					finalmove_.MakeFromXY(finalmove_.GetX(), 0);
+			}
+		}
+		if(true)
+		if (terrain.cubescene[int(player.xpos + 0.5 + 1.0) / 2][int(player.ypos) / 2][int(player.zpos + 0.5) / 2].type == Objects::CONCRETE)
+		{
+			if (finalmove_.GetX() > 0.0f)
+				finalmove_.MakeFromXY(0.000001, finalmove_.GetY()); // TODO
+		}
+		if (terrain.cubescene[int(player.xpos + 0.5 - 0.5) / 2][int(player.ypos) / 2][int(player.zpos + 0.5) / 2].type == Objects::CONCRETE)
+		{
+			if (finalmove_.GetX() < 0.0f)
+				finalmove_.MakeFromXY(-0.000001, finalmove_.GetY()); // TODO
+		}
+
+		break;
+	}
+
+
+}
+
+/*
+
+void Input::UpCollision(Player& player, const Terrain& terrain)
+{
+	float finalX = 0.0;
+	float finalZ = 0.0;
 	//int x=int(xpos);
 
 	switch (state_)
 	{
 	case State::walking:
 
-
-		if (terrain.cubescene[int(player.xpos) / 2][int(player.ypos) / 2][int(player.zpos) / 2].type == Objects::CONCRETE)
-		{
-			finxmove = 0;
-			player.zpos += move_.GetY();
+		if (true) {
+			if (terrain.cubescene[int(player.xpos + 0.5) / 2][int(player.ypos) / 2][int(player.zpos + 0.5 - 0.5) / 2].type == Objects::CONCRETE)
+			{
+				if (finalmove_.GetY() < 0.0f)
+					finalmove_.MakeFromXY(finalmove_.GetX(), 0);
+			}
 		}
-
-		break;
-
-	case State::inair:
-
 		break;
 	}
 
-	player.xpos += finxmove;
-	player.zpos += finzmove;
-
 
 }
+*/
 
 
 void Input::SmoothCamera(Terrain& terrain, Player& player, Game& game)
 {
 	static float yrotating;
 	realcamera_[1] = terrain.SafeScene((int)(player.xpos), (int)(player.zpos)).h + CAM_HEIGHT;
-	if (player.xpos > 0 && player.xpos < LevelSizeX && player.zpos>0 && player.zpos < LevelSizeZ && game.mode == GameModes::game) {
-		float zpos2 = cos(player.yrot * PIover180) * 3, xpos2 = sin(player.yrot * PIover180) * 3;
-		float dist = realcamera_[1] - fincamera_[1];
-		float bobdist = dist;
-
-		int xx2 = (int)(player.xpos / 2.0 + 0.5);
-		int zz2 = (int)(player.zpos / 2.0 + 0.5);
-		int yy2 = (int)((player.ypos - CAM_HEIGHT) / 2.0 + 0.5);
-		float distcol = 8.0f;
-
-		wlock_ = false;
-		alock_ = false;
-		slock_ = false;
-		dlock_ = false;
-
+	fincamera_[1] = (fincamera_[1] * 5+ realcamera_[1]) / 6.0f;
+	int cubeY;
 		switch (state_)
 		{
 		case State::walking:
-			if (fincamera_[1] - terrain.scene[(int)(player.xpos + xpos2)][(int)(player.zpos + zpos2)].h - CAM_HEIGHT < -3.0f) {
-
-				wlock_ = true;
-			}
-
-			if (bobdist < 0.5)bobdist = 0;
-			if (keys['W'].press && !wlock_)
+			cubeY = int(player.ypos) / 2 - 3;
+			if (terrain.cubescene[int(player.xpos + 0.5) / 2][cubeY][int(player.zpos + 0.5) / 2].type == Objects::CONCRETE)
 			{
-				yrotating += 0.2;
-			}
-
-			if (dist < -0.2f)
-				fincamera_[1] += (dist) / 8.0f;
-			else
-				fincamera_[1] += (dist) / 4.0f;
-			player.ypos = fincamera_[1];
+				player.ypos = cubeY*2+6;
+			}else
+				player.ypos = fincamera_[1];
 			player.movespeed = 0.2;
 			break;
 
 		case State::inair:
 			break;
 		}
-	}
-	else { game.mode = GameModes::spectate; player.movespeed = 4; }
-
-	Collision(player, terrain);
+	
+	//Collision(player, terrain);
 }
 
+void Input::ProcChr(HUD& hud, Game& game) {
+	for (unsigned char chr = 0; chr < 255; chr++) {
+		if (keys[chr].Hit) {
+			unsigned char newChr = chr;
+			switch (chr) {
+			case 13:
+				ChatEnter(hud, game);
+				return;
+			case 190:
+				newChr = '.';
+				break;
+			case 191:
+				newChr = '/';
+				break;
+			case 32:
+				newChr = ' ';
+				break;
+			case 186:
+				newChr = ':';
+				break;
+			default:
+				break;
+			}
+			std::string str{ (char)newChr };
+			enteredText.append(str);
+		}
+	}
 
-void Input::Check(BotManager& bots, Sound& sound, Terrain& terrain, Player& player, HUD& hud, Game& game, Projectile& projectile)
+}
+
+void Input::Check(BotManager& bots, Sound& sound, Terrain& terrain, Player& player, HUD& hud, Game& game)
 {
 
 	if (game.GameOver && !deadonce_)sound.Dead();
@@ -343,25 +402,33 @@ void Input::Check(BotManager& bots, Sound& sound, Terrain& terrain, Player& play
 		float x3, y3, z3, z3h, y3h, x3h;
 		if (game.mode == GameModes::game)
 		{
+			if (enteringText) {
+				ProcChr(hud, game);
+				//ClearKeys();
+				//return;
+			}
+			else {
+
+
 			Dig(terrain, player, hud, sound, 0.0f, false, true);
 
 			if (keys[VK_UP].Hit && game.Cheat) {
-				terrain.BuildScene(bots, game, player, true, true);
+				terrain.BuildScene(true, true);
 			}
 			if (keys[VK_DOWN].Hit && game.Cheat) {
 				big_--;
-				terrain.BuildScene(bots, game, player, true, true);
+				terrain.BuildScene(true, true);
 			}
 			if (keys[VK_SPACE].Hit && keys[VK_SPACE].TICK > 20) {
 				keys[VK_SPACE].TICK = 0;
-				if (game.mode == GameModes::game)
+				if (game.mode == GameModes::game && state_ == State::walking)
 				{
 					Jump(player);
 				}
 			}
 			if (keys[VK_TAB].press && game.Cheat) {
 				terrain.Smooth();
-				terrain.BuildScene(bots, game, player, false, true);
+				terrain.BuildScene(false, true);
 			}
 
 			//if (keys['0'].Hit)
@@ -399,7 +466,7 @@ void Input::Check(BotManager& bots, Sound& sound, Terrain& terrain, Player& play
 			//if(keys['R'].press && Cheat){
 			//	Terrain.JustMakeItBigger();
 			//	BuildScene(false,true);}
-			//if(keys['T'].press && Cheat){
+			//if(keys['deltaTick'].press && Cheat){
 			//	Terrain.JustMakeItSmaller();
 			//	BuildScene(false,true);}
 			if (LMB.press)
@@ -433,7 +500,7 @@ void Input::Check(BotManager& bots, Sound& sound, Terrain& terrain, Player& play
 			}
 			if (LMB.Hit)
 			{
-				Hand = rand() % 2;
+				//Hand = rand() % 2;
 				LMB.Hit = false;
 				switch (hud.slot)
 				{
@@ -504,14 +571,10 @@ void Input::Check(BotManager& bots, Sound& sound, Terrain& terrain, Player& play
 
 			if (keys['G'].Hit && game.Cheat) {
 				game.Debug = !game.Debug;
-				terrain.BuildScene(bots, game, player, false, true);
+				terrain.BuildScene(false, true);
 			}
 			bool pressedy = false;
 			
-			if (keys[VK_ESCAPE].Hit)
-			{
-			}
-
 			if (keys['F'].press && game.Cheat)
 			{
 				physup_ = true;
@@ -525,13 +588,19 @@ void Input::Check(BotManager& bots, Sound& sound, Terrain& terrain, Player& play
 					b++;
 				}
 			};
+			}
+			if (keys['T'].Hit) {
+				Chat();
+			}
 		}
 		else if (game.mode == GameModes::menu)
 		{
-			player.yrot += 0.3f;
+			player.yrot += 0.3f * deltaTick;
 		}
 		move_.angle = player.yrot * PIover180;
-		move_.scalar = 1.0f;
+		move_.scalar = 1.0f * deltaTick;
+
+
 
 		float forwardx = move_.GetY(),
 			forwardy = -player.movespeed,
@@ -541,48 +610,49 @@ void Input::Check(BotManager& bots, Sound& sound, Terrain& terrain, Player& play
 
 		float finxmove = 0, finymove = 0, finzmove = 0;
 
-		if (keys['W'].press)
-		{
-			slock_ = false;
-			finymove += forwardy;
-
-			if (!wlock_)
+		if (!enteringText) {
+			if (keys['W'].press)
 			{
-				finxmove += forwardx;
-				finzmove += forwardz;
+				slock_ = false;
+				finymove += forwardy;
+
+				if (!wlock_)
+				{
+					finxmove += forwardx;
+					finzmove += forwardz;
+				}
+			}
+
+			if (keys['S'].press)
+			{
+				wlock_ = false;
+				finymove -= forwardy;
+
+				if (!slock_)
+				{
+					finxmove -= forwardx;
+					finzmove -= forwardz;
+				}
+			}
+			if (keys['A'].press)
+			{
+				dlock_ = false;
+				if (!alock_)
+				{
+					finxmove += leftx;
+					finzmove += leftz;
+				}
+			}
+			if (keys['D'].press)
+			{
+				alock_ = false;
+				if (!dlock_)
+				{
+					finxmove -= leftx;
+					finzmove -= leftz;
+				}
 			}
 		}
-
-		if (keys['S'].press)
-		{
-			wlock_ = false;
-			finymove -= forwardy;
-
-			if (!slock_)
-			{
-				finxmove -= forwardx;
-				finzmove -= forwardz;
-			}
-		}
-		if (keys['A'].press)
-		{
-			dlock_ = false;
-			if (!alock_)
-			{
-				finxmove += leftx;
-				finzmove += leftz;
-			}
-		}
-		if (keys['D'].press)
-		{
-			alock_ = false;
-			if (!dlock_)
-			{
-				finxmove -= leftx;
-				finzmove -= leftz;
-			}
-		}
-
 
 
 		finalmove_.MakeFromXY(finxmove, finzmove);
@@ -602,13 +672,18 @@ void Input::Check(BotManager& bots, Sound& sound, Terrain& terrain, Player& play
 		int deltax = (localx - (signed int)(SCREEN_CENTER_X / 2));
 		int deltay = (localy - (signed int)(SCREEN_CENTER_Y / 2));
 
+		if (!windowFocused) {
+			deltax = 0;
+			deltay = 0;
+		}
 
 		if (game.mode != GameModes::menu)
 		{
+			Collision(player,terrain);
 			player.yrot += deltax / 32.0;
 			player.xrot += deltay / 32.0;
-			player.xpos += finalmove_.GetX() * player.movespeed * T;
-			player.zpos += finalmove_.GetY() * player.movespeed * T;
+			player.xpos += finalmove_.GetX() * player.movespeed * deltaTick;
+			player.zpos += finalmove_.GetY() * player.movespeed * deltaTick;
 			if (player.xrot > 90.0f)player.xrot = 90;
 			if (player.xrot < -90.0f)player.xrot = -90;
 			SmoothCamera(terrain, player, game);

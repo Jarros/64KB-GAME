@@ -1,0 +1,11 @@
+C:\Dev\64kb\64kb\bots.cpp;C:\Dev\64kb\64kb\64kb\Release\bots.obj
+C:\Dev\64kb\64kb\game.cpp;C:\Dev\64kb\64kb\64kb\Release\game.obj
+C:\Dev\64kb\64kb\hud.cpp;C:\Dev\64kb\64kb\64kb\Release\hud.obj
+C:\Dev\64kb\64kb\input.cpp;C:\Dev\64kb\64kb\64kb\Release\input.obj
+C:\Dev\64kb\64kb\main.cpp;C:\Dev\64kb\64kb\64kb\Release\main.obj
+C:\Dev\64kb\64kb\player.cpp;C:\Dev\64kb\64kb\64kb\Release\player.obj
+C:\Dev\64kb\64kb\projectile.cpp;C:\Dev\64kb\64kb\64kb\Release\projectile.obj
+C:\Dev\64kb\64kb\render.cpp;C:\Dev\64kb\64kb\64kb\Release\render.obj
+C:\Dev\64kb\64kb\sound.cpp;C:\Dev\64kb\64kb\64kb\Release\sound.obj
+C:\Dev\64kb\64kb\terrain.cpp;C:\Dev\64kb\64kb\64kb\Release\terrain.obj
+C:\Dev\64kb\64kb\textures.cpp;C:\Dev\64kb\64kb\64kb\Release\textures.obj

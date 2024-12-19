@@ -21,10 +21,21 @@ public:
 	Slots slot;
 	HUD::HUD();
 
+	enum class eChatClr :unsigned char {
+		default, red, green, blue
+	};
+
+	std::string chat[256]{""};
+	eChatClr chatClrs[256];
+	int chat_i = 0;
+
+	void PrintConsole(std::string str, eChatClr eClr = eChatClr::default);
+
 	void Line2D(coord x, coord y, coord x2, coord y2, coord width);
 	//         ASCII !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! http://www.asciitable.com/index/asciifull.gif
 	enum symboltype
 	{
+		space = 32,
 		number = 48,  //48-57
 		letter = 65,  //65-90
 		symbol1 = 33, //33-47
@@ -33,15 +44,17 @@ public:
 		number2 = 97	//97-122
 	};
 
-	bool GetFontQuad(char st, coord x, coord y);
+	bool GetFontQuad(unsigned char st, coord x, coord y);
 
-	void Symbol(char chr, coord xpos, coord ypos, coord size, bool Italics);
+	void Symbol(unsigned char chr, coord xpos, coord ypos, coord size, bool Italics);
 
-	void Line(std::string st, coord xpos, coord ypos, coord size, bool Italics);
+	void DrawChat(const Input& input);
+
+	void PrintLine(std::string st, coord xpos, coord ypos, coord size, bool Italics);
 
 	void SwitchMenu(Game& game);
 
-	void StartGame(Game& game);
+	void StartGame(Game& game, Terrain& terrain, Player& player);
 
 	void DrawInventory(Player& player);
 
@@ -57,6 +70,28 @@ public:
 
 #define _ false
 #define X true
+
+//!"#$%^'()*+,-./
+const bool font_symbol1[6][5 * 25] = {
+
+	{ _,_,X,_,_,  X,X,X,_,_,  _,X,X,X,_,  X,X,X,_,_,  X,X,X,X,_,  X,X,X,X,_,  X,X,X,X,X,  X,_,_,X,_,  _,X,X,X,_,  _,X,X,X,_,  X,_,_,X,_,  X,_,_,_,_,  X,_,_,_,X,  _,_,_,_,_,  _,_,_,_,_,  X,X,X,X,_,  X,X,X,X,_,  X,X,X,X,_,  _,X,X,X,_,  X,X,X,X,X,  X,_,_,X,_,  X,_,_,X,_,  X,_,_,_,X,  X,_,_,X,_ },
+	{ _,_,X,_,_,  X,_,_,X,_,  X,_,_,_,_,  X,_,_,X,_,  X,_,_,_,_,  X,_,_,_,_,  X,X,X,X,X,  X,_,_,X,_,  _,_,X,_,_,  _,_,_,X,_,  X,_,X,_,_,  X,_,_,_,_,  X,X,_,X,X,  _,_,_,_,_,  _,_,_,_,X,  X,_,_,X,_,  X,_,_,X,_,  X,_,_,X,_,  X,_,_,_,_,  _,_,X,_,_,  X,_,_,X,_,  X,_,_,X,_,  X,_,_,_,X,  X,_,_,X,_ },
+	{ _,_,X,_,_,  X,X,X,_,_,  X,_,_,_,_,  X,_,_,X,_,  X,X,X,_,_,  X,X,X,_,_,  X,X,X,X,X,  X,_,_,X,_,  _,_,X,_,_,  _,_,_,X,_,  X,X,X,_,_,  X,_,_,_,_,  X,_,X,_,X,  _,_,_,_,_,  _,_,_,X,_,  X,_,_,X,_,  X,_,_,X,_,  X,X,X,X,_,  X,X,X,_,_,  _,_,X,_,_,  X,_,_,X,_,  X,_,_,X,_,  X,_,_,_,X,  _,X,X,_,_ },
+	{ _,_,X,_,_,  X,_,_,X,_,  X,_,_,_,_,  X,_,_,X,_,  X,_,_,_,_,  X,_,_,_,_,  X,X,X,X,X,  X,X,X,X,_,  _,_,X,_,_,  _,_,_,X,_,  X,_,_,X,_,  X,_,_,_,_,  X,_,_,_,X,  _,_,_,_,_,  _,_,X,_,_,  X,X,X,X,_,  X,_,_,X,_,  X,X,_,_,_,  _,_,_,X,_,  _,_,X,_,_,  X,_,_,X,_,  X,_,_,X,_,  X,_,X,_,X,  _,X,X,_,_ },
+	{ _,_,_,_,_,  X,_,_,X,_,  X,_,_,_,_,  X,_,_,X,_,  X,_,_,_,_,  X,_,_,_,_,  X,X,X,X,X,  X,_,_,X,_,  _,_,X,_,_,  _,_,_,X,_,  X,_,_,X,_,  X,_,_,X,_,  X,_,_,_,X,  _,_,X,X,_,  _,X,_,_,_,  X,_,_,_,_,  X,_,X,_,_,  X,_,X,_,_,  _,_,_,X,_,  _,_,X,_,_,  X,_,_,X,_,  X,_,_,X,_,  X,_,X,_,X,  X,_,_,X,_ },
+	{ _,_,X,_,_,  X,X,X,X,_,  _,X,X,X,_,  X,X,X,_,_,  X,X,X,X,_,  X,_,_,_,_,  X,X,X,X,X,  X,_,_,X,_,  _,X,X,X,_,  X,X,X,_,_,  X,_,_,X,_,  X,X,X,X,_,  X,_,_,_,X,  _,_,X,X,_,  X,_,_,_,_,  X,_,_,_,_,  X,X,_,X,_,  X,_,_,X,_,  X,X,X,_,_,  _,_,X,_,_,  _,X,X,_,_,  _,X,X,_,_,  _,X,_,X,_,  X,_,_,X,_ }
+};
+
+//!"#$%^'()*+,-./
+const bool font_symbol2[6][5 * 25] = {
+
+	{ _,X,X,_,_,  X,X,X,_,_,  _,X,X,X,_,  X,X,X,_,_,  X,X,X,X,_,  X,X,X,X,_,  _,X,X,X,_,  X,_,_,X,_,  _,X,X,X,_,  _,X,X,X,_,  X,_,_,X,_,  X,_,_,_,_,  X,_,_,_,X,  _,_,_,_,_,  _,_,_,_,_,  X,X,X,X,_,  X,X,X,X,_,  X,X,X,X,_,  _,X,X,X,_,  X,X,X,X,X,  X,_,_,X,_,  X,_,_,X,_,  X,_,_,_,X,  X,_,_,X,_ },
+	{ _,_,_,_,_,  X,_,_,X,_,  X,_,_,_,_,  X,_,_,X,_,  X,_,_,_,_,  X,_,_,_,_,  X,_,_,_,_,  X,_,_,X,_,  _,_,X,_,_,  _,_,_,X,_,  X,_,X,_,_,  X,_,_,_,_,  X,X,_,X,X,  _,_,_,_,_,  _,_,_,_,X,  X,_,_,X,_,  X,_,_,X,_,  X,_,_,X,_,  X,_,_,_,_,  _,_,X,_,_,  X,_,_,X,_,  X,_,_,X,_,  X,_,_,_,X,  X,_,_,X,_ },
+	{ _,_,_,_,_,  X,X,X,_,_,  X,_,_,_,_,  X,_,_,X,_,  X,X,X,_,_,  X,X,X,_,_,  X,_,_,_,_,  X,_,_,X,_,  _,_,X,_,_,  _,_,_,X,_,  X,X,X,_,_,  X,_,_,_,_,  X,_,X,_,X,  _,_,_,_,_,  _,_,_,X,_,  X,_,_,X,_,  X,_,_,X,_,  X,X,X,X,_,  X,X,X,_,_,  _,_,X,_,_,  X,_,_,X,_,  X,_,_,X,_,  X,_,_,_,X,  _,X,X,_,_ },
+	{ _,_,_,_,_,  X,_,_,X,_,  X,_,_,_,_,  X,_,_,X,_,  X,_,_,_,_,  X,_,_,_,_,  X,_,X,X,_,  X,X,X,X,_,  _,_,X,_,_,  _,_,_,X,_,  X,_,_,X,_,  X,_,_,_,_,  X,_,_,_,X,  _,_,_,_,_,  _,_,X,_,_,  X,X,X,X,_,  X,_,_,X,_,  X,X,_,_,_,  _,_,_,X,_,  _,_,X,_,_,  X,_,_,X,_,  X,_,_,X,_,  X,_,X,_,X,  _,X,X,_,_ },
+	{ _,_,_,_,_,  X,_,_,X,_,  X,_,_,_,_,  X,_,_,X,_,  X,_,_,_,_,  X,_,_,_,_,  X,_,_,X,_,  X,_,_,X,_,  _,_,X,_,_,  _,_,_,X,_,  X,_,_,X,_,  X,_,_,X,_,  X,_,_,_,X,  _,_,X,X,_,  _,X,_,_,_,  X,_,_,_,_,  X,_,X,_,_,  X,_,X,_,_,  _,_,_,X,_,  _,_,X,_,_,  X,_,_,X,_,  X,_,_,X,_,  X,_,X,_,X,  X,_,_,X,_ },
+	{ _,X,X,_,_,  X,X,X,X,_,  _,X,X,X,_,  X,X,X,_,_,  X,X,X,X,_,  X,_,_,_,_,  _,X,X,X,_,  X,_,_,X,_,  _,X,X,X,_,  X,X,X,_,_,  X,_,_,X,_,  X,X,X,X,_,  X,_,_,_,X,  _,_,X,X,_,  X,_,_,_,_,  X,_,_,_,_,  X,X,_,X,_,  X,_,_,X,_,  X,X,X,_,_,  _,_,X,_,_,  _,X,X,_,_,  _,X,X,_,_,  _,X,_,X,_,  X,_,_,X,_ }
+};
 
 
 const bool font_letter[6][5 * 27] = {

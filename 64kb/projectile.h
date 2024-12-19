@@ -1,14 +1,14 @@
 #pragma once
 #include "main.h"
 
-struct BotManager;
-struct Terrain;
-struct Sound;
+class BotManager;
+class Terrain;
+class Sound;
 
 class Projectile
 {
 public:
-	bool IsExists;
+	bool IsExists = false;
 	float px, py, pz;
 	float mx, my, mz;
 	float p, y, r;
@@ -23,3 +23,5 @@ public:
 	void Move(BotManager& bots, Terrain& terrain, Sound& sound);
 	bool MakeRocket(int a, float x, float y, float z, float vecx, float vecy, float vecz, float dmg, float dmgrad);
 };
+
+extern Projectile projectile;

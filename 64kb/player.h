@@ -1,7 +1,7 @@
 #pragma once
 #include "main.h"
 
-struct Terrain;
+class Terrain;
 
 const ubyte MaxAmmo[] = { 0,        0,      8,      0,      64,     8,      8 };
 

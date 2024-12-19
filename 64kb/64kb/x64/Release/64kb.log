@@ -1,0 +1,127 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\amd64\Microsoft.Common.CurrentVersion.targets(2175,5): warning MSB9008: The referenced project '..\PHYSICS-BULLET\BulletBin\src\BulletCollision\BulletCollision.vcxproj' does not exist.
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\amd64\Microsoft.Common.CurrentVersion.targets(2175,5): warning MSB9008: The referenced project '..\PHYSICS-BULLET\BulletBin\src\BulletDynamics\BulletDynamics.vcxproj' does not exist.
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\amd64\Microsoft.Common.CurrentVersion.targets(2175,5): warning MSB9008: The referenced project '..\PHYSICS-BULLET\BulletBin\src\LinearMath\LinearMath.vcxproj' does not exist.
+cl : command line  warning D9002: ignoring unknown option '/QIfist'
+  main.cpp
+C:\Dev\64kb\64kb\main.h(42,18): warning C4305: 'initializing': truncation from 'double' to 'float'
+  (compiling source file 'main.cpp')
+  
+C:\Dev\64kb\64kb\main.h(43,28): warning C4305: 'initializing': truncation from 'double' to 'float'
+  (compiling source file 'main.cpp')
+  
+C:\Dev\64kb\64kb\main.h(91,9): warning C4305: '=': truncation from 'double' to 'float'
+  (compiling source file 'main.cpp')
+  
+C:\Dev\64kb\64kb\main.h(213,33): warning C4305: 'initializing': truncation from 'double' to 'const float'
+  (compiling source file 'main.cpp')
+  
+C:\Dev\64kb\64kb\bots.h(6,8): warning C4099: 'Sound': type name first seen using 'class' now seen using 'struct'
+  (compiling source file 'main.cpp')
+      C:\Dev\64kb\64kb\sound.h(8,7):
+      see declaration of 'Sound'
+  
+C:\Dev\64kb\64kb\input.h(4,7): warning C4099: 'Player': type name first seen using 'struct' now seen using 'class'
+  (compiling source file 'main.cpp')
+      C:\Dev\64kb\64kb\bots.h(4,8):
+      see declaration of 'Player'
+  
+C:\Dev\64kb\64kb\input.h(5,7): warning C4099: 'Terrain': type name first seen using 'struct' now seen using 'class'
+  (compiling source file 'main.cpp')
+      C:\Dev\64kb\64kb\bots.h(3,8):
+      see declaration of 'Terrain'
+  
+C:\Dev\64kb\64kb\input.h(6,7): warning C4099: 'Game': type name first seen using 'struct' now seen using 'class'
+  (compiling source file 'main.cpp')
+      C:\Dev\64kb\64kb\bots.h(5,8):
+      see declaration of 'Game'
+  
+C:\Dev\64kb\64kb\hud.h(6,7): warning C4099: 'Player': type name first seen using 'struct' now seen using 'class'
+  (compiling source file 'main.cpp')
+      C:\Dev\64kb\64kb\input.h(4,7):
+      see declaration of 'Player'
+  
+C:\Dev\64kb\64kb\hud.h(7,7): warning C4099: 'Terrain': type name first seen using 'struct' now seen using 'class'
+  (compiling source file 'main.cpp')
+      C:\Dev\64kb\64kb\input.h(5,7):
+      see declaration of 'Terrain'
+  
+C:\Dev\64kb\64kb\hud.h(8,7): warning C4099: 'Game': type name first seen using 'struct' now seen using 'class'
+  (compiling source file 'main.cpp')
+      C:\Dev\64kb\64kb\input.h(6,7):
+      see declaration of 'Game'
+  
+C:\Dev\64kb\64kb\render.h(6,7): warning C4099: 'Player': type name first seen using 'struct' now seen using 'class'
+  (compiling source file 'main.cpp')
+      C:\Dev\64kb\64kb\hud.h(6,7):
+      see declaration of 'Player'
+  
+C:\Dev\64kb\64kb\render.h(7,7): warning C4099: 'Terrain': type name first seen using 'struct' now seen using 'class'
+  (compiling source file 'main.cpp')
+      C:\Dev\64kb\64kb\hud.h(7,7):
+      see declaration of 'Terrain'
+  
+C:\Dev\64kb\64kb\render.h(8,7): warning C4099: 'Game': type name first seen using 'struct' now seen using 'class'
+  (compiling source file 'main.cpp')
+      C:\Dev\64kb\64kb\hud.h(8,7):
+      see declaration of 'Game'
+  
+C:\Dev\64kb\64kb\player.h(12,7): warning C4099: 'Player': type name first seen using 'struct' now seen using 'class'
+  (compiling source file 'main.cpp')
+      C:\Dev\64kb\64kb\player.h(12,7):
+      see declaration of 'Player'
+  
+C:\Dev\64kb\64kb\network.h(6,7): warning C4099: 'Terrain': type name first seen using 'struct' now seen using 'class'
+  (compiling source file 'main.cpp')
+      C:\Dev\64kb\64kb\player.h(4,8):
+      see declaration of 'Terrain'
+  
+C:\Dev\64kb\64kb\game.h(15,7): warning C4099: 'Game': type name first seen using 'struct' now seen using 'class'
+  (compiling source file 'main.cpp')
+      C:\Dev\64kb\64kb\game.h(15,7):
+      see declaration of 'Game'
+  
+C:\Dev\64kb\64kb\projectile.h(4,8): warning C4099: 'BotManager': type name first seen using 'class' now seen using 'struct'
+  (compiling source file 'main.cpp')
+      C:\Dev\64kb\64kb\render.h(12,7):
+      see declaration of 'BotManager'
+  
+C:\Dev\64kb\64kb\projectile.h(6,8): warning C4099: 'Sound': type name first seen using 'class' now seen using 'struct'
+  (compiling source file 'main.cpp')
+      C:\Dev\64kb\64kb\render.h(11,7):
+      see declaration of 'Sound'
+  
+C:\Dev\64kb\64kb\terrain.h(5,8): warning C4099: 'BotManager': type name first seen using 'class' now seen using 'struct'
+  (compiling source file 'main.cpp')
+      C:\Dev\64kb\64kb\projectile.h(4,8):
+      see declaration of 'BotManager'
+  
+C:\Dev\64kb\64kb\terrain.h(6,8): warning C4099: 'Game': type name first seen using 'class' now seen using 'struct'
+  (compiling source file 'main.cpp')
+      C:\Dev\64kb\64kb\game.h(15,7):
+      see declaration of 'Game'
+  
+C:\Dev\64kb\64kb\terrain.h(7,8): warning C4099: 'Player': type name first seen using 'class' now seen using 'struct'
+  (compiling source file 'main.cpp')
+      C:\Dev\64kb\64kb\network.h(7,7):
+      see declaration of 'Player'
+  
+C:\Dev\64kb\64kb\terrain.h(17,7): warning C4099: 'Terrain': type name first seen using 'struct' now seen using 'class'
+  (compiling source file 'main.cpp')
+      C:\Dev\64kb\64kb\terrain.h(17,7):
+      see declaration of 'Terrain'
+  
+C:\Dev\64kb\64kb\main.cpp(81,7): warning C4834: discarding return value of function with [[nodiscard]] attribute
+C:\Dev\64kb\64kb\main.cpp(117,19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Dev\64kb\64kb\main.cpp(332,3): warning C4838: conversion from 'int' to 'BYTE' requires a narrowing conversion
+C:\Dev\64kb\64kb\main.cpp(665,13): warning C4244: 'return': conversion from 'WPARAM' to 'int', possible loss of data
+  Generating code
+C:\Dev\64kb\64kb\network.cpp(95): warning C4715: 'Networking::sendToClientRaw': not all control paths return a value
+C:\Dev\64kb\64kb\network.cpp(381): warning C4715: 'Networking::sendToServerRaw': not all control paths return a value
+C:\Dev\64kb\64kb\network.cpp(35): warning C4715: 'Networking::createSocket': not all control paths return a value
+C:\Dev\64kb\64kb\network.cpp(317): warning C4715: 'Networking::connectToServer': not all control paths return a value
+C:\Dev\64kb\64kb\network.cpp(62): warning C4715: 'Networking::bindSocket': not all control paths return a value
+  58 of 368 functions (15.8%) were compiled, the rest were copied from previous compilation.
+    2 functions were new in current compilation
+    4 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  64kb.vcxproj -> C:\Dev\64kb\64kb\x64\Release\64kb.exe

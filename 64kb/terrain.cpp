@@ -5,6 +5,13 @@
 #include "terrain.h"
 #include "input.h"
 
+void Terrain::bindReferences(BotManager* bots, Game* game, Player* player)
+{
+	bots_ = bots;
+	game_ = game;
+	player_ = player;
+}
+
 bool Terrain::AddCube(coord x, coord y, coord z, Objects type, bool using_adapted_coords)
 {
 	int cnum = 0;
@@ -72,12 +79,18 @@ void Terrain::ClearAll(BotManager& bots)
 	{
 		for (int x = 0; x < EngineLevelSizeX; x++)
 		{
-			buffer_[x][z] = 0;
 			scene[x][z].h = 0;
 			scene[x][z].type = Objects::NONE;
 			clr0rgb[x][z].r = 0;
 			clr0rgb[x][z].g = 0;
 			clr0rgb[x][z].b = 0;
+		}
+	}
+	for (int z = 0; z < LevelSizeZ; z++)
+	{
+		for (int x = 0; x < LevelSizeX; x++)
+		{
+			buffer_[x][z] = 0;
 		}
 	}
 	for (int x = 0; x < chunkx; x++)for (int z = 0; z < chunkz; z++)cubenum[x][z] = 0;
@@ -140,7 +153,7 @@ void Terrain::ApplyBufferToScene(coord times)
 
 void Terrain::Interpolate(int i)
 {
-
+	//return;
 	int size = landsize / i;
 
 	for (int pointx = 0; pointx < i; pointx++)
@@ -156,7 +169,7 @@ void Terrain::Interpolate(int i)
 			for (int n = 0; n < size; n++)
 			{
 				float y = k * n + ya;
-				buffer_[pointx * size + n][pointz * size] = y;
+				buffer_[clamp(pointx * size + n,0, terxl)][clamp(pointz * size,0, terzl)] = y;
 			}
 		}
 
@@ -164,8 +177,8 @@ void Terrain::Interpolate(int i)
 	for (int x = 0; x < landsize; x++)
 		for (int pointz = 0; pointz < i; pointz++)
 		{
-			float ya = buffer_[x][pointz * size];
-			float yb = buffer_[x][(pointz + 1) * size];
+			float ya = buffer_[clamp(x,0,terxl)][clamp(pointz * size, 0, terzl)];
+			float yb = buffer_[clamp(x,0, terxl)][clamp((pointz + 1) * size, 0, terzl)];
 			int xa = 0;
 			int xb = size;
 
@@ -174,7 +187,7 @@ void Terrain::Interpolate(int i)
 			for (int n = 0; n < size; n++)
 			{
 				float z = k * n + ya;
-				buffer_[x][pointz * size + n] = z;
+				buffer_[clamp(x,0,terxl)][clamp(pointz * size + n,0,terzl)] = z;
 			}
 		}
 }
@@ -424,10 +437,15 @@ bool Terrain::OnLevel(float x, float y, float z)
 				return true;
 	return false;
 }
-void Terrain::Fractal()
+void Terrain::Fractal(long long int seed = 0)
 {
 	float GlobalAdd;
-	seedrand_tick();
+	//seedrand_tick();
+	if (seed == 0) {
+		seed = GetTickCount();
+	}
+	seed_ = seed;
+	srand(seed_);
 
 	Generate();
 
@@ -436,6 +454,8 @@ void Terrain::Fractal()
 	int dist;
 	coord max = terxh - EdgeDampingMaxDist;
 	float finaddx = 0.0f, finaddy = 0.0f;
+
+	if(true)
 	for (int x = 0; x < terx; x++)
 	{
 		dist = abs((int)x - (int)terxh);
@@ -461,51 +481,54 @@ void Terrain::Fractal()
 			}
 
 			scene[x][z].h -= 17.0f;//13.0f;
-			if (scene[x][z].h < 6.0f) { scene[x][z].h = scene[x][z].h / 1.5f - 2.0f + rndf(); }
+			if (true && scene[x][z].h < 6.0f) { scene[x][z].h = scene[x][z].h / 1.5f - 2.0f; }
 
 			scene[x][z].h += finaddx + finaddy;
+			if(true)
 			if (!rnd(0, 7) && objectsnum_ < MAX_Objs && scene[x][z].h>36.0f && scene[x][z].h < 80.0f)// && scene[x][z]<60.0f && scene[x][z]>30.0f)
 			{
 				scene[x][z].type = static_cast<Objects>(static_cast<int>(Objects::GRASS1) + rnd(0, 2));
 			}
 
-			if (scene[x][z].h < 0.0f) { scene[x][z].h = 0 + rndf(); }
+			if (true && scene[x][z].h < 0.0f) { scene[x][z].h = 0; }
 
 		}
 	}
 
 	BuildCastles();
 	PlaceCrates();
+
+	player_->Spawn(*this);
 }
 
 
-void Terrain::BuildScene(BotManager& bots, const Game& game, Player& player, bool rebuildgeo, bool rebuildclr) {
+void Terrain::BuildScene(bool rebuildgeo, bool rebuildclr, long long int seed) {
 
 	objectsnum_ = 0;
 	if (rebuildgeo)
 	{
-		ClearAll(bots); Fractal();
+		ClearAll(*bots_); Fractal(seed);
 	}
 
 	for (coord n = 0; n < botsnum; n++)
-		bots.bot[n].Spawn(*this);
+		bots_->bot[n].Spawn(*this);
 
-	if (game.Cheat)
+	if (game_->Cheat)
 	{
-		player.GetWeapon(Slots::SPADE).Own = true;
-		player.GetWeapon(Slots::BAZOOKA).Own = true;
-		player.GetWeapon(Slots::MACHINEGUN).Own = true;
-		player.GetWeapon(Slots::SPADE).Ammo = 1;
-		player.GetWeapon(Slots::BAZOOKA).Ammo = 8;
-		player.GetWeapon(Slots::MACHINEGUN).Ammo = 64;
+		player_->GetWeapon(Slots::SPADE).Own = true;
+		player_->GetWeapon(Slots::BAZOOKA).Own = true;
+		player_->GetWeapon(Slots::MACHINEGUN).Own = true;
+		player_->GetWeapon(Slots::SPADE).Ammo = 1;
+		player_->GetWeapon(Slots::BAZOOKA).Ammo = 8;
+		player_->GetWeapon(Slots::MACHINEGUN).Ammo = 64;
 	}
-	player.GetWeapon(Slots::HANDS).Own = true;
+	player_->GetWeapon(Slots::HANDS).Own = true;
 
-	player.GetWeapon(Slots::HANDS).Ammo = 0;
+	player_->GetWeapon(Slots::HANDS).Ammo = 0;
 
-	player.GetWeapon(Slots::BLOCKS).Own = true;
+	player_->GetWeapon(Slots::BLOCKS).Own = true;
 
-	player.GetWeapon(Slots::BLOCKS).Ammo = 0;
+	player_->GetWeapon(Slots::BLOCKS).Ammo = 0;
 
 	const int LevelSand = 32;
 	const int LevelGrass = 114;
@@ -518,7 +541,7 @@ void Terrain::BuildScene(BotManager& bots, const Game& game, Player& player, boo
 				coord num = x * z + z;
 				if (scene[x][z].type != Objects::CONCRETE)
 				{
-					if (!game.Debug)
+					if (!game_->Debug)
 					{
 						coord rg = rnd(0, 15);
 						if (x == 0 || z == 0 || x > EngineLevelSizeX || z > EngineLevelSizeZ)

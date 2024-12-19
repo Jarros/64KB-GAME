@@ -43,11 +43,20 @@ bool Player::InWater() const
 
 bool Player::NewPosition(const Terrain& terrain)
 {
-	for (int tries = 0; tries < 16; tries++)
+	const int maxTries = 16;
+	for (int tries = 0; tries < maxTries; tries++)
 	{
-		xpos = rand() % terx;
-		zpos = rand() % terz;
+		//xpos = rand() % terx;
+		//zpos = rand() % terz;
+		//xpos = terx / 2;
+		//zpos = terz / 2;
+		
+		//xpos = terxh + sin(tries);
+		
+		xpos = terxh + tries*(terxh/ maxTries);
+		zpos = terzh;
 		if (terrain.scene[(int)xpos][(int)zpos].h > WATER_HEIGHT)
+
 			return true;
 	}
 	return false;
@@ -55,7 +64,7 @@ bool Player::NewPosition(const Terrain& terrain)
 
 bool Player::Spawn(const Terrain& terrain)
 {
-	HP = 100;
+	HP = 255;
 	if (NewPosition(terrain))
 	{
 		return true;

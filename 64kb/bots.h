@@ -1,9 +1,9 @@
 #pragma once
 
-struct Terrain;
-struct Player;
-struct Game;
-struct Sound;
+class Terrain;
+class Player;
+class Game;
+class Sound;
 
 const int botsnum = 16;
 

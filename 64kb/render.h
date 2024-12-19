@@ -15,11 +15,12 @@ enum class Objects : byte;
 class Render
 {
 public:
+
 	bool CubeIsInit;
 	bool DrawCube;
 	Objects drawtype;
 
-	void Line(GLfloat x, GLfloat y, GLfloat z, GLfloat x2, GLfloat y2, GLfloat z2, ubyte r, ubyte g, ubyte b, ubyte a, GLfloat width, bool machinegun);
+	void PrintLine(GLfloat x, GLfloat y, GLfloat z, GLfloat x2, GLfloat y2, GLfloat z2, ubyte r, ubyte g, ubyte b, ubyte a, GLfloat width, bool machinegun);
 
 	void CubeFaces(GLfloat v0a[], GLfloat v1a[], GLfloat v2a[], GLfloat v3a[], GLfloat v0b[], GLfloat v1b[], GLfloat v2b[], GLfloat v3b[]);
 
@@ -65,7 +66,7 @@ private:
 
 	void Grass(const ::Terrain& terrain, const Player& player);
 
-	void SpecialObjects();
+	void SpecialObjects(const Textures& textures);
 
 	void Cubes(const ::Terrain& terrain, const Player& player, const Textures& textures);
 
@@ -79,7 +80,7 @@ private:
 
 	void Menu(::BotManager& bots, Game& game, Player& player, ::HUD& hud, ::Terrain& terrain, const Input& input, Sound& sound);
 
-	void HUD(Player& player, const Game& game, ::HUD& hud);
+	void HUD(Player& player, const Game& game, ::HUD& hud, const Input& input);
 
 	void Bot(::BotManager& bot);
 
