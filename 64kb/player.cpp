@@ -41,6 +41,21 @@ bool Player::InWater() const
 }
 
 
+void* Player::serialize() {
+
+	data.xpos = xpos;
+	data.ypos = ypos;
+	data.zpos = zpos;
+	
+	data.xrot = xrot;
+	data.yrot = -yrot/180.0*PI+PI;
+	data.zrot = zrot;
+	
+	return &data;
+	//const sData* serializedData = new sData *data; //new char[sizeof(test)];//sizeof(float)*6];
+
+}
+
 bool Player::NewPosition(const Terrain& terrain)
 {
 	const int maxTries = 16;
@@ -65,6 +80,7 @@ bool Player::NewPosition(const Terrain& terrain)
 bool Player::Spawn(const Terrain& terrain)
 {
 	HP = 255;
+
 	if (NewPosition(terrain))
 	{
 		return true;

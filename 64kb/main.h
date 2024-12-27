@@ -11,6 +11,11 @@
 #include <math.h>
 
 
+
+enum class eClrs :unsigned char {
+	default, red, green, blue
+};
+
 template <typename T>
 T clamp(const T& n, const T& lower, const T& upper) {
 	return max(lower, min(n, upper));

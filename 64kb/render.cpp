@@ -371,46 +371,64 @@ void Render::HUD(Player& player, const Game& game, ::HUD &hud, const Input& inpu
 	}
 }
 
+void Render::drawBot(::Bot& bot, const Textures &textures, const eClrs eClr) {
+	//::Bot& bot = bots.bot[n];
+	ubyte color = bot.HPb;
+	{
+		//if (Dist3D(x, y, z, xpos, ypos, zpos) > 768.0f)
+		//	return;
+
+		float cl = 0.5f + color / 512.0f;
+		glDisable(GL_BLEND);
+
+		switch (eClr) {
+			case eClrs::default:
+				glColor4f(1.0f, cl, cl, 1.0f);
+				break;
+			case eClrs::blue:
+				glColor4f(0.5f, 0.5f, 1.0f, 1.0f);
+			break;
+		}
+
+		float yr2 = bot.yr_i * 180 / PI;
+		Box(bot.x_i, bot.y_i, bot.z_i, 2.5f, 5.5f, 1.25f, 0.0f, yr2, 0.0f, textures.GetWeaponTexture(Slots::BAZOOKA).B);
+
+		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+
+		{
+			Vector2D a;
+
+			a.MakeFromXY(0.15, 0.0);
+			a = a.Rotate(bot.yr_i);
+			Box(bot.x_i + a.GetY(), bot.y_i + 0.5f, bot.z_i + a.GetX(), 1.8f, 0.2f, 1.5f, 0.0f, yr2, 0.0f, textures.GetWeaponTexture(Slots::MACHINEGUN).B);
+
+			a.MakeFromXY(0.5, 0.45);
+			a = a.Rotate(bot.yr_i);
+			Box(bot.x_i + a.GetY(), bot.y_i + 1.5f, bot.z_i + a.GetX(), 0.2f, 0.2f, 0.5f, 0.0f, yr2, 0.0f, textures.GetWeaponTexture(Slots::MACHINEGUN).B);
+
+			a.MakeFromXY(0.5, -0.45);
+			a = a.Rotate(bot.yr_i);
+			Box(bot.x_i + a.GetY(), bot.y_i + 1.5f, bot.z_i + a.GetX(), 0.2f, 0.2f, 0.5f, 0.0f, yr2, 0.0f, textures.GetWeaponTexture(Slots::MACHINEGUN).B);
+		}
+		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+
+	}
+}
 
 void Render::BotManager(::BotManager& bots, const Textures& textures)
 {
 	for (coord n = 0; n < botsnum; n++)
 	{
-		::Bot& bot = bots.bot[n];
-		ubyte color = bot.HPb;
-		{
-			//if (Dist3D(x, y, z, xpos, ypos, zpos) > 768.0f)
-			//	return;
-
-			float cl = 0.5f + color / 512.0f;
-			glDisable(GL_BLEND);
-
-			glColor4f(1.0f, cl, cl, 1.0f);
-
-			float yr2 = bot.yr * 180 / PI;
-			Box(bot.x, bot.y, bot.z, 2.5f, 5.5f, 1.25f, 0.0f, yr2, 0.0f, textures.GetWeaponTexture(Slots::BAZOOKA).B);
-
-			glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-
-			{
-				Vector2D a;
-
-				a.MakeFromXY(0.15, 0.0);
-				a = a.Rotate(bot.yr);
-				Box(bot.x + a.GetY(), bot.y + 0.5f, bot.z + a.GetX(), 1.8f, 0.2f, 1.5f, 0.0f, yr2, 0.0f, textures.GetWeaponTexture(Slots::MACHINEGUN).B);
-
-				a.MakeFromXY(0.5, 0.45);
-				a = a.Rotate(bot.yr);
-				Box(bot.x + a.GetY(), bot.y + 1.5f, bot.z + a.GetX(), 0.2f, 0.2f, 0.5f, 0.0f, yr2, 0.0f, textures.GetWeaponTexture(Slots::MACHINEGUN).B);
-
-				a.MakeFromXY(0.5, -0.45);
-				a = a.Rotate(bot.yr);
-				Box(bot.x + a.GetY(), bot.y + 1.5f, bot.z + a.GetX(), 0.2f, 0.2f, 0.5f, 0.0f, yr2, 0.0f, textures.GetWeaponTexture(Slots::MACHINEGUN).B);
-			}
-			glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-
-		}
+		drawBot(bots.bot[n], textures);
 	}
+	for (coord n = 0; n < 16; n++)
+	{
+		otherPlayer &ply = bots.otherPlayers[n];
+
+		if (ply.online)
+			drawBot(ply, textures, eClrs::blue);
+	}
+
 }
 
 void Render::Cycle(::Terrain& terrain, Player& player, Textures& textures, Game& game, ::HUD& hud, Sound& sound, ::BotManager &bots, Input &input)

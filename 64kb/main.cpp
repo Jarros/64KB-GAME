@@ -60,7 +60,7 @@ float Dist3D(float x, float y, float z, float x2, float y2, float z2)
 
 
 bool	active = TRUE;		// Window Active Flag Set To TRUE By Default
-bool	fullscreen = FALSE;	// Fullscreen Flag Set To Fullscreen Mode By Default
+bool	fullscreen = TRUE;	// Fullscreen Flag Set To Fullscreen Mode By Default
 
 
 
@@ -480,7 +480,7 @@ void init() {
 	render = new Render();
 	player = new Player();
 	//projectile = new Projectile();
-	network->bindReferences(hud, terrain, player);
+	network->bindReferences(hud, terrain, player, bots);
 	terrain->bindReferences(bots, game, player);
 
 	sound->InitWave();
@@ -526,6 +526,7 @@ void mainLoop() {
 
 	if (GetTickCount() - networkingTick > networkTickms) {
 		network->mainLoop();
+		networkingTick = GetTickCount();
 	}
 
 	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))	// Is There A Message Waiting?
@@ -563,6 +564,7 @@ void mainLoop() {
 
 		render->Cycle(*terrain, *player, *textures, *game, *hud, *sound, *bots, *input);
 		bots->Process(*terrain, *game, *player, *sound);
+		//bots->Process(*terrain, *game, *player, *sound);
 
 
 

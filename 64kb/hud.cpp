@@ -18,7 +18,7 @@ HUD::HUD()
 	slot = Slots::HANDS;
 }
 
-void HUD::PrintConsole(std::string str, HUD::eChatClr eClr) {
+void HUD::PrintConsole(std::string str, eClrs eClr) {
 	//MessageBox(NULL, str.c_str(), "print", MB_OK);
 	if (true && chat_i == 255) {
 		for (std::string& str : chat) {
@@ -173,22 +173,22 @@ void HUD::DrawChat(const Input& input)
 	for (int i = chat_i; i >= 0; i--)
 	{
 		switch (chatClrs[chat_i - i]) {
-		case eChatClr::default:
+		case eClrs::default:
 			menuclr[0] = 1.0f;
 			menuclr[1] = 1.0f;
 			menuclr[2] = 1.0f;
 			break;
-		case eChatClr::red:
+		case eClrs::red:
 			menuclr[0] = 1.0f;
 			menuclr[1] = 0.5f;
 			menuclr[2] = 0.5f;
 			break;
-		case eChatClr::green:
+		case eClrs::green:
 			menuclr[0] = 0.5f;
 			menuclr[1] = 1.0f;
 			menuclr[2] = 0.5f;
 			break;
-		case eChatClr::blue:
+		case eClrs::blue:
 			menuclr[0] = 0.5f;
 			menuclr[1] = 0.5f;
 			menuclr[2] = 1.0f;

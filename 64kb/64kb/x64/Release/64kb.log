@@ -2,126 +2,146 @@
 C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\amd64\Microsoft.Common.CurrentVersion.targets(2175,5): warning MSB9008: The referenced project '..\PHYSICS-BULLET\BulletBin\src\BulletDynamics\BulletDynamics.vcxproj' does not exist.
 C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\amd64\Microsoft.Common.CurrentVersion.targets(2175,5): warning MSB9008: The referenced project '..\PHYSICS-BULLET\BulletBin\src\LinearMath\LinearMath.vcxproj' does not exist.
 cl : command line  warning D9002: ignoring unknown option '/QIfist'
-  main.cpp
-C:\Dev\64kb\64kb\main.h(42,18): warning C4305: 'initializing': truncation from 'double' to 'float'
-  (compiling source file 'main.cpp')
+  render.cpp
+C:\Dev\64kb\64kb\main.h(53,18): warning C4305: 'initializing': truncation from 'double' to 'float'
+  (compiling source file 'render.cpp')
   
-C:\Dev\64kb\64kb\main.h(43,28): warning C4305: 'initializing': truncation from 'double' to 'float'
-  (compiling source file 'main.cpp')
+C:\Dev\64kb\64kb\main.h(54,28): warning C4305: 'initializing': truncation from 'double' to 'float'
+  (compiling source file 'render.cpp')
   
-C:\Dev\64kb\64kb\main.h(91,9): warning C4305: '=': truncation from 'double' to 'float'
-  (compiling source file 'main.cpp')
+C:\Dev\64kb\64kb\main.h(102,9): warning C4305: '=': truncation from 'double' to 'float'
+  (compiling source file 'render.cpp')
   
-C:\Dev\64kb\64kb\main.h(213,33): warning C4305: 'initializing': truncation from 'double' to 'const float'
-  (compiling source file 'main.cpp')
+C:\Dev\64kb\64kb\main.h(224,33): warning C4305: 'initializing': truncation from 'double' to 'const float'
+  (compiling source file 'render.cpp')
   
-C:\Dev\64kb\64kb\bots.h(6,8): warning C4099: 'Sound': type name first seen using 'class' now seen using 'struct'
-  (compiling source file 'main.cpp')
-      C:\Dev\64kb\64kb\sound.h(8,7):
-      see declaration of 'Sound'
-  
-C:\Dev\64kb\64kb\input.h(4,7): warning C4099: 'Player': type name first seen using 'struct' now seen using 'class'
-  (compiling source file 'main.cpp')
-      C:\Dev\64kb\64kb\bots.h(4,8):
-      see declaration of 'Player'
-  
-C:\Dev\64kb\64kb\input.h(5,7): warning C4099: 'Terrain': type name first seen using 'struct' now seen using 'class'
-  (compiling source file 'main.cpp')
-      C:\Dev\64kb\64kb\bots.h(3,8):
-      see declaration of 'Terrain'
-  
-C:\Dev\64kb\64kb\input.h(6,7): warning C4099: 'Game': type name first seen using 'struct' now seen using 'class'
-  (compiling source file 'main.cpp')
-      C:\Dev\64kb\64kb\bots.h(5,8):
-      see declaration of 'Game'
-  
-C:\Dev\64kb\64kb\hud.h(6,7): warning C4099: 'Player': type name first seen using 'struct' now seen using 'class'
-  (compiling source file 'main.cpp')
-      C:\Dev\64kb\64kb\input.h(4,7):
-      see declaration of 'Player'
-  
-C:\Dev\64kb\64kb\hud.h(7,7): warning C4099: 'Terrain': type name first seen using 'struct' now seen using 'class'
-  (compiling source file 'main.cpp')
-      C:\Dev\64kb\64kb\input.h(5,7):
-      see declaration of 'Terrain'
-  
-C:\Dev\64kb\64kb\hud.h(8,7): warning C4099: 'Game': type name first seen using 'struct' now seen using 'class'
-  (compiling source file 'main.cpp')
-      C:\Dev\64kb\64kb\input.h(6,7):
-      see declaration of 'Game'
-  
-C:\Dev\64kb\64kb\render.h(6,7): warning C4099: 'Player': type name first seen using 'struct' now seen using 'class'
-  (compiling source file 'main.cpp')
-      C:\Dev\64kb\64kb\hud.h(6,7):
-      see declaration of 'Player'
-  
-C:\Dev\64kb\64kb\render.h(7,7): warning C4099: 'Terrain': type name first seen using 'struct' now seen using 'class'
-  (compiling source file 'main.cpp')
-      C:\Dev\64kb\64kb\hud.h(7,7):
-      see declaration of 'Terrain'
-  
-C:\Dev\64kb\64kb\render.h(8,7): warning C4099: 'Game': type name first seen using 'struct' now seen using 'class'
-  (compiling source file 'main.cpp')
-      C:\Dev\64kb\64kb\hud.h(8,7):
-      see declaration of 'Game'
-  
-C:\Dev\64kb\64kb\player.h(12,7): warning C4099: 'Player': type name first seen using 'struct' now seen using 'class'
-  (compiling source file 'main.cpp')
-      C:\Dev\64kb\64kb\player.h(12,7):
-      see declaration of 'Player'
-  
-C:\Dev\64kb\64kb\network.h(6,7): warning C4099: 'Terrain': type name first seen using 'struct' now seen using 'class'
-  (compiling source file 'main.cpp')
-      C:\Dev\64kb\64kb\player.h(4,8):
-      see declaration of 'Terrain'
-  
-C:\Dev\64kb\64kb\game.h(15,7): warning C4099: 'Game': type name first seen using 'struct' now seen using 'class'
-  (compiling source file 'main.cpp')
-      C:\Dev\64kb\64kb\game.h(15,7):
-      see declaration of 'Game'
-  
-C:\Dev\64kb\64kb\projectile.h(4,8): warning C4099: 'BotManager': type name first seen using 'class' now seen using 'struct'
-  (compiling source file 'main.cpp')
-      C:\Dev\64kb\64kb\render.h(12,7):
-      see declaration of 'BotManager'
-  
-C:\Dev\64kb\64kb\projectile.h(6,8): warning C4099: 'Sound': type name first seen using 'class' now seen using 'struct'
-  (compiling source file 'main.cpp')
-      C:\Dev\64kb\64kb\render.h(11,7):
-      see declaration of 'Sound'
+C:\Dev\64kb\64kb\render.h(10,17): warning C4091: 'extern ': ignored on left of 'HUD' when no variable is declared
+  (compiling source file 'render.cpp')
   
 C:\Dev\64kb\64kb\terrain.h(5,8): warning C4099: 'BotManager': type name first seen using 'class' now seen using 'struct'
-  (compiling source file 'main.cpp')
-      C:\Dev\64kb\64kb\projectile.h(4,8):
+  (compiling source file 'render.cpp')
+      C:\Dev\64kb\64kb\render.h(13,7):
       see declaration of 'BotManager'
   
 C:\Dev\64kb\64kb\terrain.h(6,8): warning C4099: 'Game': type name first seen using 'class' now seen using 'struct'
-  (compiling source file 'main.cpp')
-      C:\Dev\64kb\64kb\game.h(15,7):
+  (compiling source file 'render.cpp')
+      C:\Dev\64kb\64kb\render.h(8,7):
       see declaration of 'Game'
   
 C:\Dev\64kb\64kb\terrain.h(7,8): warning C4099: 'Player': type name first seen using 'class' now seen using 'struct'
-  (compiling source file 'main.cpp')
-      C:\Dev\64kb\64kb\network.h(7,7):
+  (compiling source file 'render.cpp')
+      C:\Dev\64kb\64kb\render.h(6,7):
       see declaration of 'Player'
   
-C:\Dev\64kb\64kb\terrain.h(17,7): warning C4099: 'Terrain': type name first seen using 'struct' now seen using 'class'
-  (compiling source file 'main.cpp')
-      C:\Dev\64kb\64kb\terrain.h(17,7):
-      see declaration of 'Terrain'
-  
-C:\Dev\64kb\64kb\main.cpp(81,7): warning C4834: discarding return value of function with [[nodiscard]] attribute
-C:\Dev\64kb\64kb\main.cpp(117,19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Dev\64kb\64kb\main.cpp(332,3): warning C4838: conversion from 'int' to 'BYTE' requires a narrowing conversion
-C:\Dev\64kb\64kb\main.cpp(665,13): warning C4244: 'return': conversion from 'WPARAM' to 'int', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(33,8): warning C4101: 'a': unreferenced local variable
+C:\Dev\64kb\64kb\render.cpp(78,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(95,40): warning C4018: '<': signed/unsigned mismatch
+C:\Dev\64kb\64kb\render.cpp(97,37): warning C4018: '<': signed/unsigned mismatch
+C:\Dev\64kb\64kb\render.cpp(99,23): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(99,23): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(99,51): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(99,51): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(100,23): warning C4838: conversion from 'coord' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(100,23): warning C4244: 'initializing': conversion from 'coord' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(100,59): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(100,59): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(117,47): warning C4018: '<': signed/unsigned mismatch
+C:\Dev\64kb\64kb\render.cpp(119,44): warning C4018: '<': signed/unsigned mismatch
+C:\Dev\64kb\64kb\render.cpp(125,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(131,23): warning C4838: conversion from 'coord' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(131,23): warning C4244: 'initializing': conversion from 'coord' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(131,74): warning C4838: conversion from 'coord' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(131,74): warning C4244: 'initializing': conversion from 'coord' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(132,23): warning C4838: conversion from 'coord' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(132,23): warning C4244: 'initializing': conversion from 'coord' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(132,77): warning C4838: conversion from 'coord' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(132,77): warning C4244: 'initializing': conversion from 'coord' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(122,13): warning C4101: 'megalod': unreferenced local variable
+C:\Dev\64kb\64kb\render.cpp(165,36): warning C4018: '<': signed/unsigned mismatch
+C:\Dev\64kb\64kb\render.cpp(166,37): warning C4018: '<': signed/unsigned mismatch
+C:\Dev\64kb\64kb\render.cpp(174,51): warning C4838: conversion from 'int' to 'GLubyte' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(174,79): warning C4838: conversion from 'int' to 'GLubyte' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(174,107): warning C4838: conversion from 'int' to 'GLubyte' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(176,26): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(176,26): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(176,59): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(176,59): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(177,26): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(177,26): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(177,73): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(177,73): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(222,12): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(223,12): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(229,27): warning C4018: '<': signed/unsigned mismatch
+C:\Dev\64kb\64kb\render.cpp(236,36): warning C4244: 'argument': conversion from 'coord' to 'GLfloat', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(236,27): warning C4244: 'argument': conversion from 'coord' to 'GLfloat', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(236,18): warning C4244: 'argument': conversion from 'coord' to 'GLfloat', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(246,202): warning C4244: 'argument': conversion from 'const coord' to 'GLfloat', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(246,124): warning C4244: 'argument': conversion from 'const coord' to 'GLfloat', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(246,101): warning C4244: 'argument': conversion from 'const coord' to 'GLfloat', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(246,27): warning C4244: 'argument': conversion from 'const coord' to 'GLfloat', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(266,51): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(266,35): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(266,19): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(269,69): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Dev\64kb\64kb\render.cpp(269,55): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(269,39): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(269,19): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(306,29): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(306,29): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(306,55): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(306,55): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(307,21): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(307,21): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(307,47): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(307,47): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(308,21): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(308,21): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(308,39): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(308,39): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(309,29): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(309,29): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(309,47): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(309,47): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(393,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(401,17): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Dev\64kb\64kb\render.cpp(405,22): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Dev\64kb\64kb\render.cpp(409,23): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Dev\64kb\64kb\render.cpp(568,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(713,22): warning C4018: '<': signed/unsigned mismatch
+C:\Dev\64kb\64kb\render.cpp(714,72): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(762,22): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Dev\64kb\64kb\render.cpp(762,17): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Dev\64kb\64kb\render.cpp(762,12): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Dev\64kb\64kb\render.cpp(777,29): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(777,29): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(777,55): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(777,55): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(778,25): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(778,25): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(778,51): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(778,51): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(779,25): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(779,25): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(779,43): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(779,43): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(780,29): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(780,29): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(780,47): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(780,47): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(850,17): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Dev\64kb\64kb\render.cpp(881,17): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Dev\64kb\64kb\render.cpp(881,12): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
   Generating code
-C:\Dev\64kb\64kb\network.cpp(95): warning C4715: 'Networking::sendToClientRaw': not all control paths return a value
-C:\Dev\64kb\64kb\network.cpp(381): warning C4715: 'Networking::sendToServerRaw': not all control paths return a value
-C:\Dev\64kb\64kb\network.cpp(35): warning C4715: 'Networking::createSocket': not all control paths return a value
-C:\Dev\64kb\64kb\network.cpp(317): warning C4715: 'Networking::connectToServer': not all control paths return a value
-C:\Dev\64kb\64kb\network.cpp(62): warning C4715: 'Networking::bindSocket': not all control paths return a value
-  58 of 368 functions (15.8%) were compiled, the rest were copied from previous compilation.
-    2 functions were new in current compilation
-    4 functions had inline decision re-evaluated but remain unchanged
+  Previous IPDB and IOBJ mismatch, fall back to full compilation.
+C:\Dev\64kb\64kb\sound.cpp(162): warning C4715: 'Sound::Close': not all control paths return a value
+C:\Dev\64kb\64kb\sound.cpp(62): warning C4715: 'Sound::InitWave': not all control paths return a value
+C:\Dev\64kb\64kb\sound.cpp(78): warning C4715: 'Sound::Proc': not all control paths return a value
+C:\Dev\64kb\64kb\network.cpp(410): warning C4715: 'Networking::sendToServerRaw': not all control paths return a value
+C:\Dev\64kb\64kb\network.cpp(97): warning C4715: 'Networking::sendToClientRaw': not all control paths return a value
+C:\Dev\64kb\64kb\network.cpp(36): warning C4715: 'Networking::createSocket': not all control paths return a value
+C:\Dev\64kb\64kb\network.cpp(346): warning C4715: 'Networking::connectToServer': not all control paths return a value
+C:\Dev\64kb\64kb\network.cpp(63): warning C4715: 'Networking::bindSocket': not all control paths return a value
+  All 381 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   64kb.vcxproj -> C:\Dev\64kb\64kb\x64\Release\64kb.exe

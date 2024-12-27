@@ -10,6 +10,7 @@
 #include <thread>
 #include "network.h"
 #include "player.h"
+#include "bots.h"
 
 
 
@@ -63,19 +64,20 @@
 
     void Networking::mainLoop()
     {
-        if (serverIsUp) {
-
+        if (serverIsUp && connectionEstablished) {
+            sendToClient(eMsg::playerDataFromServer, player_->serialize(), sizeof(player_->data));
         }
-        else if (clientIsUp) {
-            //sendToClient(eMsg::playerData, player_.serialize());
+        else if (clientIsUp && connectionEstablished) {
+            sendToServer(eMsg::playerDataFromClient, player_->serialize(), sizeof(player_->data));
         }
     }
 
-    void Networking::bindReferences(HUD* hud, Terrain* terrain, Player* player)
+    void Networking::bindReferences(HUD* hud, Terrain* terrain, Player* player, BotManager* bots)
     {
         hud_ = hud;
         terrain_ = terrain;
         player_ = player;
+        bots_ = bots;
     }
 
     int Networking::sendToClientRaw(const void* buf, size_t len) {
@@ -134,13 +136,13 @@
     void Networking::sendText(const char* text) {
         if (clientIsUp) {
             std::string str = std::string("Client: ").append(text);
-            hud_->PrintConsole(str, HUD::eChatClr::blue);
+            hud_->PrintConsole(str, eClrs::blue);
             Message* msg = new Message(eMsg::textFromClient, strlen(text)+1, (void*)text);
             sendToServerRaw(msg->Serialize(), msg->fullSize_);
         }
         if (serverIsUp) {
             std::string str = std::string("Server: ").append(text);
-            hud_->PrintConsole(str, HUD::eChatClr::green);
+            hud_->PrintConsole(str, eClrs::green);
             Message* msg = new Message(eMsg::textFromServer, strlen(text) + 1, (void*)text);
             sendToClientRaw(msg->Serialize(), msg->fullSize_);
         }
@@ -148,7 +150,7 @@
 
     void Networking::receiveMessage(Message* msg) {
 
-        HUD::eChatClr clr;
+        eClrs clr;
         std::string str = "";
         switch (msg->eMsg_) {
         case eMsg::levelDataFromServer:
@@ -157,20 +159,41 @@
             hud_->PrintConsole(str);
             break;
         case eMsg::textFromClient:
-            clr = HUD::eChatClr::blue;
+            clr = eClrs::blue;
             str.append("Client: ").append((const char*)msg->serializedData_);
             hud_->PrintConsole(str, clr);
             break;
         case eMsg::playerDataFromServer:
-
+        {
+            Player::sData data;
+            memcpy(&data, msg->serializedData_, sizeof(Player::sData));
+            otherPlayer& ply = bots_->otherPlayers[0];
+            ply.online = true;
+            ply.x = data.xpos;
+            ply.y = data.ypos - 2.0f;
+            ply.z = data.zpos;
+            ply.yr = data.yrot;
+        }
+            break;
+        case eMsg::playerDataFromClient:
+        {
+            Player::sData data;
+            memcpy(&data, msg->serializedData_, sizeof(Player::sData));
+            otherPlayer& ply = bots_->otherPlayers[0];
+            ply.online = true;
+            ply.x = data.xpos;
+            ply.y = data.ypos - 2.0f;
+            ply.z = data.zpos;
+            ply.yr = data.yrot;
+        }
             break;
         case eMsg::textFromServer:
-            clr = HUD::eChatClr::green;
+            clr = eClrs::green;
             str.append("Server: ").append((const char*)msg->serializedData_);
             hud_->PrintConsole(str, clr);
             break;
         default:
-            clr = HUD::eChatClr::default;
+            clr = eClrs::default;
         }
     }
 
@@ -259,6 +282,7 @@
             return;
         }
         else {
+            connectionEstablished = true;
             std::cout << "Received data: " << receiveBuffer << std::endl;
             //hud_->PrintConsole(std::string("Received data: ").append(receiveBuffer));
         }
@@ -433,6 +457,8 @@
         // Continue with the client setup...
 
         //std::thread thread(acceptClient);
+        connectionEstablished = true;
+
         std::thread thread([this] { acceptClient(); });
         thread.detach();
 

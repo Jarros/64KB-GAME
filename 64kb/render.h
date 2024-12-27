@@ -7,9 +7,11 @@ class Player;
 class Terrain;
 class Game;
 class Input;
-class HUD;
+extern class HUD;
+enum class eClrs :unsigned char;
 class Sound;
 class BotManager;
+class Bot;
 enum class Objects : byte;
 
 class Render
@@ -82,6 +84,8 @@ private:
 
 	void HUD(Player& player, const Game& game, ::HUD& hud, const Input& input);
 
-	void Bot(::BotManager& bot);
+	void drawBot(::Bot& bot, const Textures& textures, const eClrs eClr = eClrs::default);
+
+	//void Bot(::BotManager& bot);
 
 };

@@ -26,8 +26,14 @@ public:
 	float xpos, ypos, zpos;
 	float xrot, yrot, zrot;
 
+	void* serialize();
+
+	struct sData {
+		float xpos, ypos, zpos;
+		float xrot, yrot, zrot;
+	}data;
+
 private:
-	
 
 	struct InvSlot
 	{

@@ -11,9 +11,10 @@ private:
 	HUD* hud_ = nullptr;
 	Terrain* terrain_ = nullptr;
 	Player* player_ = nullptr;
+	BotManager* bots_ = nullptr;
 	int tick = 0;
 public:
-	void bindReferences(HUD* hud, Terrain* terrain, Player* player);
+	void bindReferences(HUD* hud, Terrain* terrain, Player* player, BotManager* bots);
 	void serverReceiveLoop();//Async, detached thread
 	void clientReceiveLoop();//Async, detached thread
 
@@ -47,6 +48,7 @@ public:
 
 	bool serverIsUp = false;
 	bool clientIsUp = false;
+	bool connectionEstablished = false;
 
 	void mainLoop();
 

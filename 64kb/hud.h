@@ -21,15 +21,11 @@ public:
 	Slots slot;
 	HUD::HUD();
 
-	enum class eChatClr :unsigned char {
-		default, red, green, blue
-	};
-
 	std::string chat[256]{""};
-	eChatClr chatClrs[256];
+	eClrs chatClrs[256];
 	int chat_i = 0;
 
-	void PrintConsole(std::string str, eChatClr eClr = eChatClr::default);
+	void PrintConsole(std::string str, eClrs eClr = eClrs::default);
 
 	void Line2D(coord x, coord y, coord x2, coord y2, coord width);
 	//         ASCII !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! http://www.asciitable.com/index/asciifull.gif

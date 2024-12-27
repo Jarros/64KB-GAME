@@ -17,6 +17,7 @@ public:
 	void Kill();
 	bool Spawn(const Terrain& terrain);
 	float yr;
+	float x_i, y_i, z_i, yr_i;
 
 private:
 	bool found_;
@@ -27,11 +28,17 @@ private:
 	void BreakWalls(Terrain& terrain);
 };
 
+class otherPlayer : public Bot {
+public:
+	bool online = false;
+	void Process();
+};
+
 class BotManager
 {
 	public:
-
 		Bot bot[256];
+		otherPlayer otherPlayers[16];
 		void Process(Terrain& terrain, const Game& game, Player& player, Sound& sound);
 
 };
