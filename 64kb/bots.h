@@ -28,17 +28,10 @@ private:
 	void BreakWalls(Terrain& terrain);
 };
 
-class otherPlayer : public Bot {
-public:
-	bool online = false;
-	void Process();
-};
-
 class BotManager
 {
 	public:
 		Bot bot[256];
-		otherPlayer otherPlayers[16];
 		void Process(Terrain& terrain, const Game& game, Player& player, Sound& sound);
 
 };

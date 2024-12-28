@@ -18,21 +18,6 @@ HUD::HUD()
 	slot = Slots::HANDS;
 }
 
-void HUD::PrintConsole(std::string str, eClrs eClr) {
-	//MessageBox(NULL, str.c_str(), "print", MB_OK);
-	if (true && chat_i == 255) {
-		for (std::string& str : chat) {
-			str.clear();
-		}
-		return;
-	}
-	chat_i++;
-	chat_i = chat_i % 256;
-	chat[chat_i] = str;
-	chatClrs[chat_i] = eClr;
-	return;
-}
-
 
 void HUD::Line2D(coord x, coord y, coord x2, coord y2, coord width)
 {
@@ -57,10 +42,6 @@ bool HUD::GetFontQuad(unsigned char st, coord x, coord y)
 		return font_number[x][y];
 	case letter:
 		return font_letter[x][y];
-	case symbol1:
-		return font_symbol1[x][y];
-	case symbol2:
-		return font_symbol2[x][y];
 	default:
 		return true;
 	}
@@ -132,82 +113,6 @@ void HUD::Symbol(unsigned char chr, coord xpos, coord ypos, coord size, bool Ita
 		}
 	}
 
-}
-
-
-void HUD::DrawChat(const Input& input)
-{
-
-	glLoadIdentity();
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 1, -1);
-
-	glDisable(GL_TEXTURE_2D);
-
-	glEnable(GL_BLEND);
-
-	glColor4f(0.2f, 0.2f, 0.2f, 0.1f);
-	glBegin(GL_QUADS);
-	//Line2D(96, SCREEN_HEIGHT - 288 + 64, 256 + 95 + 128, SCREEN_HEIGHT - 288 + 64, 16.0f);
-	glVertex2i(96, SCREEN_HEIGHT - 88 + 64);
-	glVertex2i(256 + 95 + 128, SCREEN_HEIGHT - 88 + 64);
-	glVertex2i(256 + 95 + 128, SCREEN_HEIGHT - 288 + 64);
-	glVertex2i(96, SCREEN_HEIGHT - 288 + 64);
-
-	glEnd();
-
-	glColor4f(1.0f, 1.0f, 0.5f, 1.0f);
-	glBegin(GL_QUADS);
-
-	//PrintLine(gamename, HSCREEN_WIDTH - 192, HSCREEN_HEIGHT - 64, 8, true);
-
-	glColor4f(1.0f, 1.0f, 0.5f, 0.5f);
-
-	if (menuselected < 0)menuselected = 0;
-	if (menuselected > 3)menuselected = 3;
-
-	float menuclr[] = { 1.0f,1.0f,1.0f };
-	const int size = 2;
-
-	for (int i = chat_i; i >= 0; i--)
-	{
-		switch (chatClrs[chat_i - i]) {
-		case eClrs::default:
-			menuclr[0] = 1.0f;
-			menuclr[1] = 1.0f;
-			menuclr[2] = 1.0f;
-			break;
-		case eClrs::red:
-			menuclr[0] = 1.0f;
-			menuclr[1] = 0.5f;
-			menuclr[2] = 0.5f;
-			break;
-		case eClrs::green:
-			menuclr[0] = 0.5f;
-			menuclr[1] = 1.0f;
-			menuclr[2] = 0.5f;
-			break;
-		case eClrs::blue:
-			menuclr[0] = 0.5f;
-			menuclr[1] = 0.5f;
-			menuclr[2] = 1.0f;
-
-			break;
-
-		}
-		bool sel = false;// (slot == menuselected);
-		glColor4f(menuclr[0], menuclr[1], menuclr[2], sel / 2.0f + 0.5f);
-		PrintLine(chat[chat_i-i], 96+16, SCREEN_HEIGHT - 288 + 64 + 7 * size * i + 16, size, sel);
-	}
-	if (input.enteringText)
-	{
-		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-		PrintLine("'", 96 - 8, SCREEN_HEIGHT - 288 + 64 + 7 * size * 0 - 16, 4, true);
-		PrintLine(input.enteredText, 96 + 16, SCREEN_HEIGHT - 288 + 64 + 7 * size * 0 - 16, 4, true);
-	}
-	glEnd();
-	glDisable(GL_BLEND);
 }
 
 void HUD::PrintLine(std::string st, coord xpos, coord ypos, coord size, bool Italics)

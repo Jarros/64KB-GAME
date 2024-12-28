@@ -20,8 +20,6 @@ enum class State : byte
 class Input
 {
 public:
-	bool enteringText = false; 
-	std::string enteredText = "";
 	bool windowFocused = false;
 	void Check(BotManager& bots, Sound& sound, Terrain& terrain, Player& player, HUD& hud, Game& game);
 	void ClearKeys();
@@ -56,8 +54,6 @@ private:
 
 	float accel_;
 
-
-	void Chat();
 
 	void ChatEnter(HUD& hud, Game& game);
 

@@ -289,7 +289,6 @@
     <ClCompile Include="hud.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="network.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="projectile.cpp" />
     <ClCompile Include="render.cpp" />
@@ -303,7 +302,6 @@
     <ClInclude Include="hud.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="main.h" />
-    <ClInclude Include="network.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="projectile.h" />
     <ClInclude Include="render.h" />

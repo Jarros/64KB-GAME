@@ -30,23 +30,6 @@ void Input::ClearKeys()
 	SetCursorPos(SCREEN_CENTER_X / 2, SCREEN_CENTER_Y / 2);
 }
 
-void Input::Chat() {
-	enteringText = true;
-}
-
-void Input::ChatEnter(HUD &hud, Game& game) {
-	//hud.chat_i++;
-	//hud.chat[hud.chat_i] = enteredText;
-	if(enteredText[0]=='/')
-		game.procCommand(enteredText);
-	else {
-		network->sendText(enteredText.c_str());
-	}
-	enteredText.clear();
-	enteringText = false;
-}
-
-
 bool Input::Hit(Terrain& terrain, const Player& player, BotManager &bots, float dist, float precision, int damage, bool destroyblocks, float pushforce, float maxdist, bool blood)
 {
 	float shit = dist * precision;
@@ -358,36 +341,6 @@ void Input::SmoothCamera(Terrain& terrain, Player& player, Game& game)
 	//Collision(player, terrain);
 }
 
-void Input::ProcChr(HUD& hud, Game& game) {
-	for (unsigned char chr = 0; chr < 255; chr++) {
-		if (keys[chr].Hit) {
-			unsigned char newChr = chr;
-			switch (chr) {
-			case 13:
-				ChatEnter(hud, game);
-				return;
-			case 190:
-				newChr = '.';
-				break;
-			case 191:
-				newChr = '/';
-				break;
-			case 32:
-				newChr = ' ';
-				break;
-			case 186:
-				newChr = ':';
-				break;
-			default:
-				break;
-			}
-			std::string str{ (char)newChr };
-			enteredText.append(str);
-		}
-	}
-
-}
-
 void Input::Check(BotManager& bots, Sound& sound, Terrain& terrain, Player& player, HUD& hud, Game& game)
 {
 
@@ -401,13 +354,7 @@ void Input::Check(BotManager& bots, Sound& sound, Terrain& terrain, Player& play
 	{
 		float x3, y3, z3, z3h, y3h, x3h;
 		if (game.mode == GameModes::game)
-		{
-			if (enteringText) {
-				ProcChr(hud, game);
-				//ClearKeys();
-				//return;
-			}
-			else {
+		{{
 
 
 			Dig(terrain, player, hud, sound, 0.0f, false, true);
@@ -589,9 +536,6 @@ void Input::Check(BotManager& bots, Sound& sound, Terrain& terrain, Player& play
 				}
 			};
 			}
-			if (keys['T'].Hit) {
-				Chat();
-			}
 		}
 		else if (game.mode == GameModes::menu)
 		{
@@ -610,7 +554,7 @@ void Input::Check(BotManager& bots, Sound& sound, Terrain& terrain, Player& play
 
 		float finxmove = 0, finymove = 0, finzmove = 0;
 
-		if (!enteringText) {
+		{
 			if (keys['W'].press)
 			{
 				slock_ = false;

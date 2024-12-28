@@ -367,9 +367,9 @@ void Render::HUD(Player& player, const Game& game, ::HUD &hud, const Input& inpu
 {
 	if (!game.Menu) {
 		hud.DrawHUD(player);
-		hud.DrawChat(input);
 	}
 }
+
 
 void Render::drawBot(::Bot& bot, const Textures &textures, const eClrs eClr) {
 	//::Bot& bot = bots.bot[n];
@@ -420,13 +420,6 @@ void Render::BotManager(::BotManager& bots, const Textures& textures)
 	for (coord n = 0; n < botsnum; n++)
 	{
 		drawBot(bots.bot[n], textures);
-	}
-	for (coord n = 0; n < 16; n++)
-	{
-		otherPlayer &ply = bots.otherPlayers[n];
-
-		if (ply.online)
-			drawBot(ply, textures, eClrs::blue);
 	}
 
 }

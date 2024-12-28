@@ -107,41 +107,34 @@ C:\Dev\64kb\64kb\render.cpp(393,13): warning C4244: 'initializing': conversion f
 C:\Dev\64kb\64kb\render.cpp(401,17): warning C4305: 'argument': truncation from 'double' to 'float'
 C:\Dev\64kb\64kb\render.cpp(405,22): warning C4305: 'argument': truncation from 'double' to 'float'
 C:\Dev\64kb\64kb\render.cpp(409,23): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Dev\64kb\64kb\render.cpp(568,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Dev\64kb\64kb\render.cpp(713,22): warning C4018: '<': signed/unsigned mismatch
-C:\Dev\64kb\64kb\render.cpp(714,72): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
-C:\Dev\64kb\64kb\render.cpp(762,22): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-C:\Dev\64kb\64kb\render.cpp(762,17): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-C:\Dev\64kb\64kb\render.cpp(762,12): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-C:\Dev\64kb\64kb\render.cpp(777,29): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
-C:\Dev\64kb\64kb\render.cpp(777,29): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Dev\64kb\64kb\render.cpp(777,55): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
-C:\Dev\64kb\64kb\render.cpp(777,55): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Dev\64kb\64kb\render.cpp(778,25): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
-C:\Dev\64kb\64kb\render.cpp(778,25): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Dev\64kb\64kb\render.cpp(778,51): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
-C:\Dev\64kb\64kb\render.cpp(778,51): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Dev\64kb\64kb\render.cpp(779,25): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
-C:\Dev\64kb\64kb\render.cpp(779,25): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Dev\64kb\64kb\render.cpp(779,43): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
-C:\Dev\64kb\64kb\render.cpp(779,43): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Dev\64kb\64kb\render.cpp(780,29): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
-C:\Dev\64kb\64kb\render.cpp(780,29): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Dev\64kb\64kb\render.cpp(780,47): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
-C:\Dev\64kb\64kb\render.cpp(780,47): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Dev\64kb\64kb\render.cpp(850,17): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-C:\Dev\64kb\64kb\render.cpp(881,17): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-C:\Dev\64kb\64kb\render.cpp(881,12): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Dev\64kb\64kb\render.cpp(561,12): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(706,22): warning C4018: '<': signed/unsigned mismatch
+C:\Dev\64kb\64kb\render.cpp(707,72): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(755,22): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Dev\64kb\64kb\render.cpp(755,17): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Dev\64kb\64kb\render.cpp(755,12): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Dev\64kb\64kb\render.cpp(770,29): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(770,29): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(770,55): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(770,55): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(771,25): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(771,25): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(771,51): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(771,51): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(772,25): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(772,25): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(772,43): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(772,43): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(773,29): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(773,29): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(773,47): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\Dev\64kb\64kb\render.cpp(773,47): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Dev\64kb\64kb\render.cpp(843,17): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Dev\64kb\64kb\render.cpp(874,17): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+C:\Dev\64kb\64kb\render.cpp(874,12): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
   Generating code
-  Previous IPDB and IOBJ mismatch, fall back to full compilation.
-C:\Dev\64kb\64kb\sound.cpp(162): warning C4715: 'Sound::Close': not all control paths return a value
-C:\Dev\64kb\64kb\sound.cpp(62): warning C4715: 'Sound::InitWave': not all control paths return a value
-C:\Dev\64kb\64kb\sound.cpp(78): warning C4715: 'Sound::Proc': not all control paths return a value
-C:\Dev\64kb\64kb\network.cpp(410): warning C4715: 'Networking::sendToServerRaw': not all control paths return a value
-C:\Dev\64kb\64kb\network.cpp(97): warning C4715: 'Networking::sendToClientRaw': not all control paths return a value
-C:\Dev\64kb\64kb\network.cpp(36): warning C4715: 'Networking::createSocket': not all control paths return a value
-C:\Dev\64kb\64kb\network.cpp(346): warning C4715: 'Networking::connectToServer': not all control paths return a value
-C:\Dev\64kb\64kb\network.cpp(63): warning C4715: 'Networking::bindSocket': not all control paths return a value
-  All 381 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  0 of 226 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   64kb.vcxproj -> C:\Dev\64kb\64kb\x64\Release\64kb.exe

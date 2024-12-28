@@ -36,14 +36,6 @@ bool Bot::Spawn(const Terrain& terrain)
 	return false;
 }
 
-void otherPlayer::Process(){
-	const float s = 6.0f;
-	x_i = (x_i * s + x) / (s + 1.0f);
-	y_i = (y_i * s + y) / (s + 1.0f);
-	z_i = (z_i * s + z)/ (s + 1.0f);
-	yr_i = (yr_i * s + yr) / (s + 1.0f);
-}
-
 void Bot::BreakWalls(Terrain& terrain)
 {
 	coord xc = (int)(x / 2) + rnd(-1, 1), yc = (int)(y / 2) + rnd(-1, 1), zc = (int)(z / 2) + rnd(-1, 1);
@@ -153,12 +145,5 @@ void BotManager::Process(Terrain& terrain, const Game& game, Player& player, Sou
 	for (coord n = 0; n < botsnum; n++)
 	{
 		bot[n].Process(terrain, game, player, sound);
-	}
-	for (coord n = 0; n < 16; n++)
-	{
-			otherPlayer& ply = otherPlayers[n];
-
-			if (ply.online)
-				ply.Process();
 	}
 }

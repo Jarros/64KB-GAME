@@ -3,7 +3,6 @@ C:\Dev\64kb\64kb\game.cpp;C:\Dev\64kb\64kb\64kb\x64\Release\game.obj
 C:\Dev\64kb\64kb\hud.cpp;C:\Dev\64kb\64kb\64kb\x64\Release\hud.obj
 C:\Dev\64kb\64kb\input.cpp;C:\Dev\64kb\64kb\64kb\x64\Release\input.obj
 C:\Dev\64kb\64kb\main.cpp;C:\Dev\64kb\64kb\64kb\x64\Release\main.obj
-C:\Dev\64kb\64kb\network.cpp;C:\Dev\64kb\64kb\64kb\x64\Release\network.obj
 C:\Dev\64kb\64kb\player.cpp;C:\Dev\64kb\64kb\64kb\x64\Release\player.obj
 C:\Dev\64kb\64kb\projectile.cpp;C:\Dev\64kb\64kb\64kb\x64\Release\projectile.obj
 C:\Dev\64kb\64kb\render.cpp;C:\Dev\64kb\64kb\64kb\x64\Release\render.obj

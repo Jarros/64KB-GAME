@@ -9,7 +9,6 @@
 #include "game.h"
 #include "projectile.h"
 #include "terrain.h"
-#include "network.h"
 
 Input* input = nullptr;
 
@@ -480,7 +479,6 @@ void init() {
 	render = new Render();
 	player = new Player();
 	//projectile = new Projectile();
-	network->bindReferences(hud, terrain, player, bots);
 	terrain->bindReferences(bots, game, player);
 
 	sound->InitWave();
@@ -522,13 +520,6 @@ void mainLoop() {
 	}
 	DeltaT = GetTickCount() - timer;
 
-	const int networkTickms = 100;
-
-	if (GetTickCount() - networkingTick > networkTickms) {
-		network->mainLoop();
-		networkingTick = GetTickCount();
-	}
-
 	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))	// Is There A Message Waiting?
 	{
 		if (msg.message == WM_QUIT)				// Have We Received A Quit Message?
@@ -546,13 +537,7 @@ void mainLoop() {
 
 
 		if (input->keys[VK_ESCAPE].Hit)	// Active?  Was There A Quit Received?  && !DrawGLScene()     active
-		{
-			if (input->enteringText) {
-
-				input->enteringText = false;
-				input->enteredText.clear();
-			}
-			else {
+		{{
 
 				if (game->Cheat)done = TRUE;							// ESC or DrawGLScene Signalled A Quit
 				else
